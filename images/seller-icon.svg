@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Enhanced glow effects -->
+  <defs>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="1.5" result="blur" />
+      <feFlood flood-color="#FF0000" flood-opacity="0.4" result="glow-color"/>
+      <feComposite in="glow-color" in2="blur" operator="in" result="colored-blur"/>
+      <feComposite in="SourceGraphic" in2="colored-blur" operator="over"/>
+    </filter>
+    
+    <filter id="subtle-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="1" result="blur" />
+      <feFlood flood-color="#FF0000" flood-opacity="0.3" result="glow-color"/>
+      <feComposite in="glow-color" in2="blur" operator="in" result="colored-blur"/>
+      <feComposite in="SourceGraphic" in2="colored-blur" operator="over"/>
+    </filter>
+    
+    <linearGradient id="redGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF3333" />
+      <stop offset="100%" stop-color="#990000" />
+    </linearGradient>
+    
+    <radialGradient id="storeGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="#2A2A2A" />
+      <stop offset="100%" stop-color="#1A1A1A" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <circle cx="24" cy="24" r="22" fill="rgba(0,0,0,0.1)" stroke="none" />
+  
+  <!-- Store/shop group -->
+  <g filter="url(#subtle-glow)">
+    <!-- Store roof/awning -->
+    <path d="M8 14L24 4L40 14" fill="none" stroke="url(#redGradient)" stroke-width="1.8" stroke-linecap="round"/>
+    
+    <!-- Roof detail -->
+    <line x1="24" y1="4" x2="24" y2="8" stroke="url(#redGradient)" stroke-width="1" stroke-linecap="round"/>
+    
+    <!-- Store main building -->
+    <rect x="9" y="14" width="30" height="23" rx="2" fill="url(#storeGradient)" stroke="url(#redGradient)" stroke-width="1.5"/>
+    
+    <!-- Store base/foundation -->
+    <rect x="8" y="37" width="32" height="3" rx="1" fill="url(#storeGradient)" stroke="url(#redGradient)" stroke-width="1.5"/>
+    
+    <!-- Store windows -->
+    <rect x="13" y="18" width="7" height="7" rx="1" fill="#0A0A0A" stroke="#FF0000" stroke-width="1.2"/>
+    <line x1="13" y1="21.5" x2="20" y2="21.5" stroke="#FF0000" stroke-width="0.8"/>
+    <line x1="16.5" y1="18" x2="16.5" y2="25" stroke="#FF0000" stroke-width="0.8"/>
+    
+    <rect x="28" y="18" width="7" height="7" rx="1" fill="#0A0A0A" stroke="#FF0000" stroke-width="1.2"/>
+    <line x1="28" y1="21.5" x2="35" y2="21.5" stroke="#FF0000" stroke-width="0.8"/>
+    <line x1="31.5" y1="18" x2="31.5" y2="25" stroke="#FF0000" stroke-width="0.8"/>
+    
+    <!-- Store door -->
+    <rect x="20" y="27" width="8" height="13" rx="1" fill="#0A0A0A" stroke="#FF0000" stroke-width="1.2"/>
+    <circle cx="22.5" cy="33.5" r="0.8" fill="#FF0000"/>
+  </g>
+  
+  <!-- Dollar sign group -->
+  <g filter="url(#glow)">
+    <!-- Dollar sign background -->
+    <circle cx="36" cy="33" r="6" fill="url(#storeGradient)" stroke="url(#redGradient)" stroke-width="1.5"/>
+    
+    <!-- Dollar sign -->
+    <path d="M36 29.5V36.5" stroke="#FF0000" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M34 30.5C34 30.5 34 29.5 36 29.5C38 29.5 38 31 36 32C34 33 34 34.5 36 34.5C38 34.5 38 33.5 38 33.5" 
+          stroke="#FF0000" stroke-width="1.5" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Small store details -->
+  <path d="M11 14L11 11" stroke="#FF0000" stroke-width="0.8" stroke-linecap="round" filter="url(#subtle-glow)"/>
+  <path d="M37 14L37 11" stroke="#FF0000" stroke-width="0.8" stroke-linecap="round" filter="url(#subtle-glow)"/>
+</svg> 

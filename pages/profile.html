@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile - Skyblock RMT Market</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="../js/main.js" defer></script>
+  <script src="../js/auth.js" defer></script>
+  <script src="../js/profile-router.js" defer></script>
+  <style>
+    body {
+      background-color: #0a0a0a;
+      color: #ffffff;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .loading-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 80vh;
+      text-align: center;
+      margin-top: 20px;
+    }
+    
+    .spinner {
+      border: 4px solid rgba(0, 255, 157, 0.1);
+      border-radius: 50%;
+      border-top: 4px solid #00ff9d;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      color: #00ff9d;
+    }
+    
+    p {
+      color: rgba(255, 255, 255, 0.7);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <h1><span class="neon-text">Skyblock</span> RMT</h1>
+    </div>
+    <nav>
+      <a href="../index.html" class="nav-link">Home</a>
+      <a href="login.html" class="nav-link">Login</a>
+      <a href="role-selection.html" class="nav-link">Register</a>
+      <a href="marketplace.html" class="nav-link">Marketplace</a>
+      <a href="action.html" class="nav-link">Action center</a>
+      <a href="seller-profile.html" class="nav-link user-account-link" style="display: none;">My Account: (<span class="username">User</span>)</a>
+    </nav>
+    <div class="mobile-nav-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </header>
+
+  <div class="loading-container">
+    <div class="spinner"></div>
+    <h2>Redirecting to your profile...</h2>
+    <p>Please wait while we direct you to the appropriate profile page.</p>
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3 class="footer-title">Skyblock RMT</h3>
+        <p>The premier marketplace for Hypixel Skyblock trading.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="marketplace.html">Browse Market</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="role-selection.html">Register</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul class="footer-links">
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Skyblock RMT - All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        const token = localStorage.getItem('skyblock_rmt_token');
+        if (!token) {
+          // If not logged in, redirect to login
+          window.location.href = 'login.html?returnTo=profile.html';
+        } else {
+          // Get user data
+          const userData = JSON.parse(localStorage.getItem('skyblock_rmt_user'));
+          
+          if (userData && userData.role) {
+            if (userData.role.toLowerCase() === 'seller') {
+              // Redirect seller to seller profile
+              window.location.href = 'seller-profile.html';
+            } else {
+              // Redirect buyer to buyer profile
+              window.location.href = 'buyer-profile.html';
+            }
+          } else {
+            // If role not found, default to buyer
+            window.location.href = 'buyer-profile.html';
+          }
+        }
+      }, 1000); // Add a short delay to show the loading animation
+    });
+  </script>
+</body>
+</html> 

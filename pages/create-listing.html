@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Listing - Skyblock RMT Market</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="../js/main.js" defer></script>
+  <script src="../js/auth.js" defer></script>
+  <script src="../js/profile-router.js" defer></script>
+  <script src="../js/marketplace.js" defer></script>
+  <style>
+    :root {
+      --sidebar-width: 260px;
+      --header-height: 70px;
+      --primary: #ff0040;
+      --primary-light: #ff3366;
+      --primary-dark: #cc0033;
+      --accent: #00ccff;
+      --accent-light: #33ddff;
+      --accent-dark: #0099cc;
+      --success: #00e676;
+      --warning: #ffab00;
+      --danger: #ff1744;
+      --info: #00b0ff;
+      --bg-dark: #0e0e16;
+      --bg-card: #171722;
+      --bg-card-hover: #1c1c2a;
+      --border-color: #2a2a40;
+      --text-primary: #ffffff;
+      --text-secondary: #b0b0cc;
+      --text-muted: #7575a3;
+      --card-radius: 12px;
+      --btn-radius: 8px;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.25);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.3);
+      --transition: all 0.3s ease;
+      --font-primary: 'Poppins', sans-serif;
+      --font-heading: 'Orbitron', sans-serif;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: var(--font-primary);
+      background-color: var(--bg-dark);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    
+    /* Header Styles */
+    .main-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--header-height);
+      background-color: rgba(12, 12, 20, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(42, 42, 64, 0.5);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 30px;
+      z-index: 1000;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+    }
+    
+    .brand {
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo-skyblock {
+      color: var(--primary);
+      text-shadow: 0 0 10px rgba(255, 0, 64, 0.5);
+    }
+    
+    .logo-rmt {
+      color: white;
+      margin-left: 5px;
+    }
+    
+    .top-nav {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .nav-link {
+      margin-right: 25px;
+      color: var(--text-secondary);
+      font-weight: 500;
+      transition: var(--transition);
+      padding: 8px 15px;
+      border-radius: var(--btn-radius);
+    }
+    
+    .nav-link:hover {
+      color: var(--text-primary);
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+    
+    .nav-link.active {
+      color: var(--primary);
+      background-color: rgba(255, 0, 64, 0.1);
+    }
+    
+    .user-pill {
+      display: flex;
+      align-items: center;
+      background-color: rgba(255, 0, 64, 0.1);
+      border-radius: 24px;
+      padding: 5px 18px 5px 5px;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 1px solid rgba(255, 0, 64, 0.2);
+    }
+    
+    .user-pill:hover {
+      background-color: rgba(255, 0, 64, 0.15);
+      border-color: rgba(255, 0, 64, 0.3);
+    }
+    
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Main Content Styles */
+    .main-content {
+      margin-left: 0;
+      margin-top: var(--header-height);
+      padding: 30px;
+      width: 100%;
+      position: relative;
+    }
+    
+    /* Dashboard Menu - Vertical Layout */
+    .dashboard-menu {
+      display: flex;
+      flex-direction: column;
+      background-color: var(--bg-card);
+      padding: 20px;
+      border-radius: var(--card-radius);
+      margin-bottom: 30px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .dashboard-menu::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      opacity: 0.8;
+    }
+    
+    .dashboard-menu .nav-item {
+      display: flex;
+      align-items: center;
+      padding: 14px 16px;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+      border-radius: var(--btn-radius);
+      transition: var(--transition);
+      border: 1px solid transparent;
+      font-weight: 500;
+    }
+    
+    .dashboard-menu .nav-item:hover {
+      background-color: rgba(255, 0, 64, 0.05);
+      color: var(--text-primary);
+      border-color: rgba(255, 0, 64, 0.1);
+      transform: translateX(3px);
+    }
+    
+    .dashboard-menu .nav-item.active {
+      background-color: rgba(255, 0, 64, 0.1);
+      color: var(--primary);
+      border-color: rgba(255, 0, 64, 0.2);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .dashboard-menu .nav-item svg {
+      margin-right: 15px;
+      width: 20px;
+      height: 20px;
+      transition: var(--transition);
+    }
+    
+    .dashboard-menu .nav-item:hover svg,
+    .dashboard-menu .nav-item.active svg {
+      color: var(--primary);
+    }
+    
+    .dashboard-menu-title {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+    }
+    
+    .dashboard-menu-title::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 18px;
+      background-color: var(--primary);
+      margin-right: 10px;
+      border-radius: 2px;
+    }
+    
+    /* Dashboard Grid Layout */
+    .dashboard-content-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 25px;
+    }
+    
+    .dashboard-content-main {
+      width: 100%;
+    }
+    
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      background-color: rgba(23, 23, 34, 0.6);
+      padding: 20px;
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-color);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .page-header::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 0, 64, 0.05) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    
+    .page-title {
+      font-size: 2rem;
+      font-weight: 700;
+      font-family: var(--font-heading);
+      letter-spacing: 0.5px;
+      position: relative;
+    }
+    
+    .page-title .accent {
+      background: linear-gradient(to right, var(--primary), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: relative;
+    }
+    
+    /* Form Styles */
+    .form-card {
+      background-color: var(--bg-card);
+      border-radius: var(--card-radius);
+      padding: 30px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-color);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .form-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    
+    .form-group {
+      margin-bottom: 25px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    
+    .form-control {
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      border-radius: var(--btn-radius);
+      padding: 12px 15px;
+      color: var(--text-primary);
+      font-family: var(--font-primary);
+      transition: var(--transition);
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(255, 0, 64, 0.1);
+    }
+    
+    .form-control::placeholder {
+      color: var(--text-muted);
+    }
+    
+    textarea.form-control {
+      min-height: 120px;
+      resize: vertical;
+    }
+    
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    
+    .btn-lg {
+      padding: 12px 25px;
+      font-size: 1rem;
+    }
+    
+    .form-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 15px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+      margin-top: 30px;
+    }
+    
+    .btn-outline {
+      background: transparent;
+      color: var(--text-secondary);
+      border-color: var(--border-color);
+    }
+    
+    .btn-outline:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: var(--text-primary);
+      transform: translateY(-2px);
+    }
+    
+    /* File Upload */
+    .file-upload {
+      background-color: rgba(255, 255, 255, 0.03);
+      border: 2px dashed var(--border-color);
+      border-radius: var(--btn-radius);
+      padding: 30px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .file-upload:hover {
+      border-color: var(--primary);
+      background-color: rgba(255, 0, 64, 0.05);
+    }
+    
+    .file-upload svg {
+      width: 40px;
+      height: 40px;
+      color: var(--text-muted);
+      margin-bottom: 15px;
+    }
+    
+    .file-upload p {
+      color: var(--text-secondary);
+      margin-bottom: 5px;
+    }
+    
+    .file-upload span {
+      color: var(--primary);
+      font-weight: 500;
+    }
+    
+    .file-upload input {
+      display: none;
+    }
+    
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .dashboard-content-grid {
+        grid-template-columns: 250px 1fr;
+      }
+    }
+    
+    @media (max-width: 992px) {
+      .dashboard-content-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .dashboard-menu {
+        margin-bottom: 20px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .main-header {
+        padding: 0 15px;
+      }
+      
+      .nav-link {
+        display: none;
+      }
+      
+      .nav-link:last-child {
+        display: flex;
+      }
+      
+      .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 15px;
+      }
+      
+      .form-card {
+        padding: 20px;
+      }
+      
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .form-footer {
+        flex-direction: column;
+      }
+      
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Main Header -->
+  <header class="main-header">
+    <div class="brand">
+      <div class="mobile-menu-toggle">
+        <span></span>
+      </div>
+      <div class="logo">
+        <span class="logo-skyblock">Skyblock</span>
+        <span class="logo-rmt">RMT</span>
+      </div>
+    </div>
+    
+    <nav class="top-nav">
+      <a href="../index.html" class="nav-link">Home</a>
+      <a href="marketplace.html" class="nav-link">Marketplace</a>
+      <a href="seller-dashboard.html" class="nav-link">Dashboard</a>
+      <div class="user-pill">
+        <div class="user-avatar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </div>
+        <span class="username">SellerName</span>
+      </div>
+    </nav>
+  </header>
+  
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="page-header">
+      <h1 class="page-title">
+        Create <span class="accent">Listing</span>
+      </h1>
+    </div>
+    
+    <div class="dashboard-content-grid">
+      <!-- Dashboard Menu -->
+      <div class="dashboard-menu">
+        <h3 class="dashboard-menu-title">Dashboard Menu</h3>
+        <a href="seller-dashboard.html" class="nav-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="9"></rect>
+            <rect x="14" y="3" width="7" height="5"></rect>
+            <rect x="14" y="12" width="7" height="9"></rect>
+            <rect x="3" y="16" width="7" height="5"></rect>
+          </svg>
+          Dashboard
+        </a>
+        <a href="my-listings.html" class="nav-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+          </svg>
+          My Listings
+        </a>
+        <a href="create-listing.html" class="nav-item active">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          Create Listing
+        </a>
+        <a href="orders.html" class="nav-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          Orders
+        </a>
+        <a href="login.html" class="nav-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          Logout
+        </a>
+      </div>
+      
+      <!-- Create Listing Form -->
+      <div class="dashboard-content-main">
+        <div class="form-card">
+          <form id="create-listing-form">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="listing-title">Listing Title</label>
+                <input type="text" id="listing-title" class="form-control" placeholder="E.g., Hypixel Coin Pack (100M)" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="listing-price">Price (USD)</label>
+                <input type="number" id="listing-price" class="form-control" placeholder="0.00" min="0.01" step="0.01" required>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="listing-category">Category</label>
+              <select id="listing-category" class="form-control" required>
+                <option value="" selected disabled>Select a category</option>
+                <option value="coins">Coins</option>
+                <option value="weapons">Weapons</option>
+                <option value="armor">Armor</option>
+                <option value="pets">Pets</option>
+                <option value="resources">Resources</option>
+                <option value="misc">Miscellaneous</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="listing-description">Description</label>
+              <textarea id="listing-description" class="form-control" placeholder="Describe your listing in detail..." required></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label>Listing Images</label>
+              <div class="file-upload">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <p>Drag and drop image files here, or</p>
+                <span>Browse Files</span>
+                <input type="file" id="listing-images" multiple accept="image/*">
+              </div>
+              <div id="image-preview-container" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px;"></div>
+            </div>
+            
+            <div class="form-group">
+              <label for="stock-quantity">Stock Quantity</label>
+              <input type="number" id="stock-quantity" class="form-control" placeholder="Enter quantity" min="1" required>
+            </div>
+            
+            <div class="form-footer">
+              <button type="button" class="btn btn-outline btn-lg" onclick="window.location.href='my-listings.html'">Cancel</button>
+              <button type="submit" class="btn btn-primary btn-lg" id="submit-btn">Create Listing</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <script>
+    // Check if user is logged in, if not redirect to login page
+    document.addEventListener('DOMContentLoaded', () => {
+      const token = localStorage.getItem('skyblock_rmt_token');
+      if (!token) {
+        // User is not logged in, redirect to login page
+        window.location.href = 'login.html?returnTo=create-listing.html';
+        return;
+      } 
+      
+      // User is logged in, check if they're a seller
+      const userData = JSON.parse(localStorage.getItem('skyblock_rmt_user'));
+      if (userData) {
+        // Check role and redirect if necessary
+        if (userData.role && userData.role.toLowerCase() !== 'seller') {
+          window.location.href = 'buyer-profile.html';
+          return;
+        }
+        
+        // Update profile information
+        document.querySelector('.username').textContent = userData.username || 'Seller';
+      }
+      
+      // Check if we're in edit mode
+      const urlParams = new URLSearchParams(window.location.search);
+      const editListingId = urlParams.get('edit');
+      let listingToEdit = null;
+      
+      if (editListingId) {
+        // We're in edit mode, change page title and button text
+        document.querySelector('.page-title').innerHTML = 'Edit <span class="accent">Listing</span>';
+        document.title = 'Edit Listing - Skyblock RMT Market';
+        document.getElementById('submit-btn').textContent = 'Update Listing';
+        
+        // Get the listing data
+        const listings = JSON.parse(localStorage.getItem('skyblock_rmt_listings')) || [];
+        listingToEdit = listings.find(listing => listing.id === editListingId);
+        
+        if (listingToEdit) {
+          // Populate the form with listing data
+          document.getElementById('listing-title').value = listingToEdit.title;
+          document.getElementById('listing-price').value = listingToEdit.price;
+          document.getElementById('listing-category').value = listingToEdit.category;
+          document.getElementById('listing-description').value = listingToEdit.description;
+          document.getElementById('stock-quantity').value = listingToEdit.quantity;
+          
+          // If there are images, show a message about existing images
+          if (listingToEdit.images && listingToEdit.images.length > 0) {
+            const fileUpload = document.querySelector('.file-upload');
+            fileUpload.style.borderColor = 'var(--success)';
+            fileUpload.querySelector('p').textContent = `${listingToEdit.images.length} existing image(s)`;
+          }
+        } else {
+          // Listing not found, redirect to listings page
+          window.location.href = 'my-listings.html';
+          return;
+        }
+      }
+      
+      // Mobile menu toggle functionality
+      const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+      if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener('click', () => {
+          document.querySelector('.dashboard-content-grid').classList.toggle('mobile-active');
+          mobileMenuToggle.classList.toggle('active');
+        });
+      }
+      
+      // File upload interaction
+      const fileUpload = document.querySelector('.file-upload');
+      const fileInput = document.getElementById('listing-images');
+      const imagePreviewContainer = document.getElementById('image-preview-container');
+      
+      // Add category change event listener to automatically select the coin image
+      const categorySelect = document.getElementById('listing-category');
+      categorySelect.addEventListener('change', function(e) {
+        if (e.target.value === 'coins') {
+          // When Coins category is selected, automatically show the coin image
+          displayCoinImage();
+        }
+      });
+      
+      // If we're in edit mode and the category is coins, automatically show the coin image
+      if (editListingId && listingToEdit && listingToEdit.category === 'coins') {
+        displayCoinImage();
+      }
+      
+      // Also check if coins is selected by default when the page loads
+      if (categorySelect.value === 'coins') {
+        displayCoinImage();
+      }
+      
+      // Function to display the specific coin image
+      function displayCoinImage() {
+        // Clear previous previews
+        imagePreviewContainer.innerHTML = '';
+        
+        // Create a preview for the coin image
+        const previewDiv = document.createElement('div');
+        previewDiv.style.width = '100px';
+        previewDiv.style.height = '100px';
+        previewDiv.style.borderRadius = 'var(--btn-radius)';
+        previewDiv.style.overflow = 'hidden';
+        previewDiv.style.position = 'relative';
+        
+        const img = document.createElement('img');
+        img.src = '../images/products/4648267406545a74a60b1d.jpg';
+        img.style.width = '100%';
+        img.style.height = '100%';
+        img.style.objectFit = 'cover';
+        img.onerror = function() {
+          this.src = '../images/products/default.svg';
+        };
+        
+        const removeBtn = document.createElement('button');
+        removeBtn.innerHTML = '&times;';
+        removeBtn.style.position = 'absolute';
+        removeBtn.style.top = '5px';
+        removeBtn.style.right = '5px';
+        removeBtn.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+        removeBtn.style.color = 'white';
+        removeBtn.style.border = 'none';
+        removeBtn.style.borderRadius = '50%';
+        removeBtn.style.width = '25px';
+        removeBtn.style.height = '25px';
+        removeBtn.style.cursor = 'pointer';
+        removeBtn.style.display = 'flex';
+        removeBtn.style.alignItems = 'center';
+        removeBtn.style.justifyContent = 'center';
+        removeBtn.style.fontSize = '16px';
+        removeBtn.title = 'Remove image';
+        
+        removeBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          previewDiv.remove();
+        });
+        
+        previewDiv.appendChild(img);
+        previewDiv.appendChild(removeBtn);
+        imagePreviewContainer.appendChild(previewDiv);
+        
+        // Update the file upload area to show success state
+        fileUpload.style.borderColor = 'var(--success)';
+        fileUpload.querySelector('p').textContent = 'Coin image selected';
+      }
+      
+      // Handle drag and drop
+      fileUpload.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        fileUpload.style.borderColor = 'var(--primary)';
+        fileUpload.style.backgroundColor = 'rgba(255, 0, 64, 0.05)';
+      });
+      
+      fileUpload.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        fileUpload.style.borderColor = 'var(--border-color)';
+        fileUpload.style.backgroundColor = '';
+      });
+      
+      fileUpload.addEventListener('drop', (e) => {
+        e.preventDefault();
+        fileUpload.style.borderColor = 'var(--success)';
+        fileUpload.style.backgroundColor = '';
+        
+        if (e.dataTransfer.files.length > 0) {
+          fileInput.files = e.dataTransfer.files;
+          fileUpload.querySelector('p').textContent = `${e.dataTransfer.files.length} file(s) selected`;
+          displayImagePreviews(e.dataTransfer.files);
+        }
+      });
+      
+      fileUpload.addEventListener('click', () => {
+        fileInput.click();
+      });
+      
+      fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+          fileUpload.style.borderColor = 'var(--success)';
+          fileUpload.querySelector('p').textContent = `${e.target.files.length} file(s) selected`;
+          displayImagePreviews(e.target.files);
+        }
+      });
+      
+      // Function to display image previews
+      function displayImagePreviews(files) {
+        // Clear previous previews
+        imagePreviewContainer.innerHTML = '';
+        
+        // Display each image preview
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          if (!file.type.startsWith('image/')) continue;
+          
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const previewDiv = document.createElement('div');
+            previewDiv.style.width = '100px';
+            previewDiv.style.height = '100px';
+            previewDiv.style.borderRadius = 'var(--btn-radius)';
+            previewDiv.style.overflow = 'hidden';
+            previewDiv.style.position = 'relative';
+            
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'cover';
+            // Add error handler to use default image if the URL is invalid
+            img.onerror = function() {
+              this.src = '../images/products/default.svg';
+            };
+            
+            const removeBtn = document.createElement('button');
+            removeBtn.innerHTML = '&times;';
+            removeBtn.style.position = 'absolute';
+            removeBtn.style.top = '5px';
+            removeBtn.style.right = '5px';
+            removeBtn.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+            removeBtn.style.color = 'white';
+            removeBtn.style.border = 'none';
+            removeBtn.style.borderRadius = '50%';
+            removeBtn.style.width = '25px';
+            removeBtn.style.height = '25px';
+            removeBtn.style.cursor = 'pointer';
+            removeBtn.style.display = 'flex';
+            removeBtn.style.alignItems = 'center';
+            removeBtn.style.justifyContent = 'center';
+            removeBtn.style.fontSize = '16px';
+            removeBtn.title = 'Remove image';
+            
+            removeBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              previewDiv.remove();
+              // Note: We would need to update the files collection here in a real implementation
+            });
+            
+            previewDiv.appendChild(img);
+            previewDiv.appendChild(removeBtn);
+            imagePreviewContainer.appendChild(previewDiv);
+          };
+          
+          reader.readAsDataURL(file);
+        }
+      }
+      
+      // If we're in edit mode and there are existing images, display them
+      if (editListingId && listingToEdit && listingToEdit.images && listingToEdit.images.length > 0) {
+        // Display existing images
+        imagePreviewContainer.innerHTML = '';
+        listingToEdit.images.forEach((imageUrl, index) => {
+          const previewDiv = document.createElement('div');
+          previewDiv.style.width = '100px';
+          previewDiv.style.height = '100px';
+          previewDiv.style.borderRadius = 'var(--btn-radius)';
+          previewDiv.style.overflow = 'hidden';
+          previewDiv.style.position = 'relative';
+          
+          const img = document.createElement('img');
+          img.src = imageUrl;
+          img.style.width = '100%';
+          img.style.height = '100%';
+          img.style.objectFit = 'cover';
+          // Add error handler to use default image if the URL is invalid
+          img.onerror = function() {
+            this.src = '../images/products/default.svg';
+          };
+          
+          const removeBtn = document.createElement('button');
+          removeBtn.innerHTML = '&times;';
+          removeBtn.style.position = 'absolute';
+          removeBtn.style.top = '5px';
+          removeBtn.style.right = '5px';
+          removeBtn.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+          removeBtn.style.color = 'white';
+          removeBtn.style.border = 'none';
+          removeBtn.style.borderRadius = '50%';
+          removeBtn.style.width = '25px';
+          removeBtn.style.height = '25px';
+          removeBtn.style.cursor = 'pointer';
+          removeBtn.style.display = 'flex';
+          removeBtn.style.alignItems = 'center';
+          removeBtn.style.justifyContent = 'center';
+          removeBtn.style.fontSize = '16px';
+          removeBtn.title = 'Remove image';
+          
+          removeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            previewDiv.remove();
+            // In a real app, we would mark this image for deletion when form is submitted
+          });
+          
+          previewDiv.appendChild(img);
+          previewDiv.appendChild(removeBtn);
+          imagePreviewContainer.appendChild(previewDiv);
+        });
+      }
+      
+      // Form submission
+      document.getElementById('create-listing-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Get form data
+        const title = document.getElementById('listing-title').value;
+        const price = document.getElementById('listing-price').value;
+        const category = document.getElementById('listing-category').value;
+        const description = document.getElementById('listing-description').value;
+        const quantity = document.getElementById('stock-quantity').value;
+        
+        // Create listing data object
+        const listingData = {
+          title,
+          price,
+          category,
+          description,
+          quantity,
+          images: [] // In a real app, you would handle file uploads here
+        };
+        
+        // Initialize images array - either empty or with existing images if in edit mode
+        if (editListingId && listingToEdit.images) {
+          listingData.images = [...listingToEdit.images];
+        }
+        
+        // Handle image uploads - Several possible scenarios:
+        // 1. New files selected - add them to images array
+        // 2. In edit mode - handle removing and adding images
+        
+        // Check if files were selected
+        if (fileInput.files.length > 0) {
+          // For demo purposes without backend, we'll use category-specific SVG icons
+          // In a real app, we would upload these files to a server and store the URLs
+          const categoryIcons = {
+            'coins': '../images/products/4648267406545a74a60b1d.jpg',
+            'weapons': '../images/products/diamond_sword.svg',
+            'armor': '../images/products/diamond_block.svg',
+            'pets': '../images/products/emerald_block.svg',
+            'resources': '../images/products/iron_block.svg',
+            'misc': '../images/products/enchanted_book.svg'
+          };
+          
+          // Clear existing images if this is a completely new set
+          listingData.images = [];
+          
+          // Add new image based on category (or use default as fallback)
+          const imagePath = categoryIcons[category] || '../images/products/default.svg';
+          listingData.images.push(imagePath);
+        } else if (imagePreviewContainer.children.length === 0 && !editListingId) {
+          // No images uploaded and not in edit mode - use category default
+          const categoryIcons = {
+            'coins': '../images/products/4648267406545a74a60b1d.jpg',
+            'weapons': '../images/products/diamond_sword.svg',
+            'armor': '../images/products/diamond_block.svg',
+            'pets': '../images/products/emerald_block.svg',
+            'resources': '../images/products/iron_block.svg',
+            'misc': '../images/products/enchanted_book.svg'
+          };
+          
+          const imagePath = categoryIcons[category] || '../images/products/default.svg';
+          listingData.images.push(imagePath);
+        } else if (imagePreviewContainer.children.length === 0 && editListingId) {
+          // All images were removed in edit mode
+          const categoryIcons = {
+            'coins': '../images/products/4648267406545a74a60b1d.jpg',
+            'weapons': '../images/products/diamond_sword.svg',
+            'armor': '../images/products/diamond_block.svg',
+            'pets': '../images/products/emerald_block.svg',
+            'resources': '../images/products/iron_block.svg',
+            'misc': '../images/products/enchanted_book.svg'
+          };
+          
+          const imagePath = categoryIcons[category] || '../images/products/default.svg';
+          listingData.images = [imagePath];
+        }
+        
+        let newListingId;
+        let successMessage;
+        
+        if (editListingId) {
+          // Update existing listing
+          updateListing(editListingId, listingData);
+          
+          // Show success message
+          successMessage = document.createElement('div');
+          successMessage.className = 'alert alert-success';
+          successMessage.innerHTML = `
+            <div class="alert-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </div>
+            <div class="alert-content">
+              <h4>Listing Updated Successfully!</h4>
+              <p>Your listing has been updated and the changes are now visible in the marketplace.</p>
+            </div>
+          `;
+        } else {
+          // Create new listing
+          console.log('Creating new listing:', listingData);
+          
+          // Add the new listing to the marketplace
+          newListingId = window.skyblockMarketplace.addNewListing(listingData);
+          
+          // Show success message
+          successMessage = document.createElement('div');
+          successMessage.className = 'alert alert-success';
+          successMessage.innerHTML = `
+            <div class="alert-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </div>
+            <div class="alert-content">
+              <h4>Listing Created Successfully!</h4>
+              <p>Your listing has been added to the marketplace and is now visible to buyers.</p>
+            </div>
+          `;
+        }
+        
+        document.querySelector('.form-card').prepend(successMessage);
+        
+        // Clear form
+        document.getElementById('create-listing-form').reset();
+        
+        // Redirect after short delay
+        setTimeout(() => {
+          window.location.href = 'my-listings.html';
+        }, 2000);
+      });
+    });
+    
+    // Function to update an existing listing
+    function updateListing(listingId, updatedData) {
+      // Get current listings
+      let listings = JSON.parse(localStorage.getItem('skyblock_rmt_listings')) || [];
+      
+      // Find the listing to update
+      const index = listings.findIndex(listing => listing.id === listingId);
+      
+      if (index !== -1) {
+        // Get existing listing and preserve any properties not in the updated data
+        const existingListing = listings[index];
+        
+        // Update the listing with new data, preserving the id, seller, rating, createdAt
+        listings[index] = {
+          ...existingListing,
+          title: updatedData.title,
+          price: parseFloat(updatedData.price),
+          category: updatedData.category,
+          description: updatedData.description,
+          quantity: parseInt(updatedData.quantity),
+          images: updatedData.images // Now we properly update the images array
+        };
+        
+        // Save updated listings to localStorage
+        localStorage.setItem('skyblock_rmt_listings', JSON.stringify(listings));
+        
+        // If we're on the marketplace page, refresh the listings
+        if (document.querySelector('.listings-grid')) {
+          window.skyblockMarketplace.loadMarketplaceListings();
+        }
+        
+        return true;
+      }
+      
+      return false;
+    }
+  </script>
+</body>
+</html> 

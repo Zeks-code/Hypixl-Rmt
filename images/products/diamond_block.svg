@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+  <!-- Diamond Block -->
+  <defs>
+    <filter id="diamondGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur" />
+      <feFlood flood-color="#A9F5F2" flood-opacity="0.7" />
+      <feComposite in2="blur" operator="in" />
+      <feComposite in="SourceGraphic" />
+    </filter>
+    <linearGradient id="diamondFront" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#81D8D0" />
+      <stop offset="100%" style="stop-color:#5F9EA0" />
+    </linearGradient>
+    <linearGradient id="diamondTop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#B0E0E6" />
+      <stop offset="100%" style="stop-color:#81D8D0" />
+    </linearGradient>
+    <linearGradient id="diamondSide" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#66CDAA" />
+      <stop offset="100%" style="stop-color:#4682B4" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Isometric Cube -->
+  <g transform="translate(50, 50)" filter="url(#diamondGlow)">
+    <!-- Top face -->
+    <polygon points="0,-25 25,0 0,25 -25,0" 
+             fill="url(#diamondTop)" stroke="#4682B4" stroke-width="1.5" />
+    
+    <!-- Left face -->
+    <polygon points="-25,0 0,25 0,50 -25,25" 
+             fill="url(#diamondSide)" stroke="#4682B4" stroke-width="1.5" />
+    
+    <!-- Right face -->
+    <polygon points="25,0 0,25 0,50 25,25" 
+             fill="url(#diamondFront)" stroke="#4682B4" stroke-width="1.5" />
+  </g>
+  
+  <!-- Diamond Sparkles -->
+  <circle cx="35" cy="30" r="1.5" fill="white" />
+  <circle cx="60" cy="40" r="1" fill="white" />
+  <circle cx="45" cy="55" r="1.2" fill="white" />
+  <circle cx="25" cy="45" r="1" fill="white" />
+  <polygon points="50,20 52,23 55,25 52,27 50,30 48,27 45,25 48,23" 
+           fill="white" opacity="0.8" />
+</svg> 

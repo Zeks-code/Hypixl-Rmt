@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Profile - Skyblock RMT Market</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #0a0a0a;
+      color: #ffffff;
+    }
+    
+    .container {
+      max-width: 960px;
+      margin: 100px auto 3rem;
+      padding: 0 1.5rem;
+    }
+    
+    .profile-container {
+      background-color: #121212;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    
+    .profile-header {
+      background: linear-gradient(135deg, #1a1a1a, #222222);
+      padding: 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+      position: relative;
+    }
+    
+    .profile-cover {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(138, 43, 226, 0.2), rgba(0, 255, 157, 0.1));
+      opacity: 0.5;
+      z-index: 0;
+    }
+    
+    .profile-picture {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background-color: #333;
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid rgba(0, 255, 157, 0.5);
+      box-shadow: 0 0 20px rgba(0, 255, 157, 0.3);
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+    
+    .profile-picture img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    
+    .profile-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .profile-role {
+      display: inline-block;
+      padding: 0.3rem 1rem;
+      background-color: rgba(0, 255, 157, 0.2);
+      border: 1px solid rgba(0, 255, 157, 0.3);
+      border-radius: 20px;
+      font-size: 0.9rem;
+      color: #00ff9d;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .profile-stats {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .stat {
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+    
+    .stat-label {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.7);
+    }
+    
+    .profile-content {
+      padding: 2rem;
+    }
+    
+    .profile-section {
+      margin-bottom: 2rem;
+    }
+    
+    .profile-section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: #ffffff;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 0.8rem;
+    }
+    
+    .profile-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    
+    .profile-info-item {
+      background-color: rgba(255,255,255,0.05);
+      padding: 1rem;
+      border-radius: 8px;
+    }
+    
+    .info-label {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 0.5rem;
+    }
+    
+    .info-value {
+      font-size: 1.1rem;
+      color: #ffffff;
+      font-weight: 500;
+    }
+    
+    .recent-activity {
+      background-color: rgba(255,255,255,0.05);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    .activity-item {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+    
+    .activity-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+      background-color: rgba(0, 255, 157, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1rem;
+    }
+    
+    .activity-details {
+      flex-grow: 1;
+    }
+    
+    .activity-title {
+      font-weight: 500;
+      margin-bottom: 0.2rem;
+    }
+    
+    .activity-time {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+    }
+    
+    .activity-status {
+      font-size: 0.8rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      background-color: rgba(0, 255, 157, 0.1);
+      color: #00ff9d;
+    }
+    
+    .completed {
+      background-color: rgba(0, 255, 157, 0.1);
+      color: #00ff9d;
+    }
+    
+    .pending {
+      background-color: rgba(255, 153, 0, 0.1);
+      color: #ff9900;
+    }
+    
+    .profile-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    
+    .profile-btn {
+      padding: 0.8rem 1.5rem;
+      background-color: #1a1a1a;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      color: #ffffff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .profile-btn:hover {
+      background-color: #222222;
+      transform: translateY(-2px);
+    }
+    
+    .profile-btn.primary {
+      background-color: rgba(0, 255, 157, 0.1);
+      border: 1px solid rgba(0, 255, 157, 0.3);
+      color: #00ff9d;
+    }
+    
+    .profile-btn.primary:hover {
+      background-color: rgba(0, 255, 157, 0.2);
+    }
+    
+    .profile-btn.logout {
+      background-color: rgba(255, 0, 0, 0.1);
+      border: 1px solid rgba(255, 0, 0, 0.3);
+      color: #ff3333;
+    }
+    
+    .profile-btn.logout:hover {
+      background-color: rgba(255, 0, 0, 0.2);
+    }
+    
+    .profile-edit-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 0.5rem 1rem;
+      background-color: rgba(0, 255, 157, 0.1);
+      border: 1px solid rgba(0, 255, 157, 0.3);
+      border-radius: 6px;
+      color: #00ff9d;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .profile-edit-btn:hover {
+      background-color: rgba(0, 255, 157, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 0 15px rgba(0, 255, 157, 0.3);
+    }
+    
+    .profile-edit-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+    
+    @media (max-width: 768px) {
+      .profile-info-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .profile-stats {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+    
+    /* Profile Edit Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+    }
+    
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .modal-content {
+      width: 90%;
+      max-width: 500px;
+      background: linear-gradient(135deg, #1a1a1a, #0c0c0c);
+      border-radius: 12px;
+      border: 1px solid rgba(0, 255, 157, 0.3);
+      box-shadow: 0 0 30px rgba(0, 255, 157, 0.2), inset 0 0 30px rgba(0, 0, 0, 0.3);
+      position: relative;
+      transform: translateY(-20px);
+      transition: all 0.3s ease;
+      overflow: hidden;
+      padding: 0;
+    }
+    
+    .modal-overlay.active .modal-content {
+      transform: translateY(0);
+      animation: modal-glow 5s infinite alternate;
+    }
+    
+    @keyframes modal-glow {
+      0% {
+        box-shadow: 0 0 20px rgba(0, 255, 157, 0.2);
+      }
+      100% {
+        box-shadow: 0 0 30px rgba(0, 255, 157, 0.3);
+      }
+    }
+    
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(90deg, rgba(0, 0, 0, 0.7), rgba(0, 255, 157, 0.05), rgba(0, 0, 0, 0.7));
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid rgba(0, 255, 157, 0.2);
+      position: relative;
+    }
+    
+    .modal-header::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 157, 0.5), transparent);
+    }
+    
+    .modal-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.7rem;
+      color: #ffffff;
+      margin: 0;
+      position: relative;
+      text-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+      letter-spacing: 1px;
+    }
+    
+    .modal-close {
+      width: 32px;
+      height: 32px;
+      background: rgba(25, 25, 25, 0.8);
+      border: 1px solid rgba(255, 0, 0, 0.3);
+      border-radius: 50%;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .modal-close:hover {
+      color: #ff3333;
+      transform: scale(1.1);
+      border-color: rgba(255, 0, 0, 0.6);
+      box-shadow: 0 0 12px rgba(255, 0, 0, 0.4);
+    }
+    
+    .modal-body {
+      padding: 1.5rem 2rem;
+      position: relative;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(0, 255, 157, 0.03) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(0, 255, 157, 0.03) 0%, transparent 20%);
+    }
+    
+    .modal-body::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 2rem;
+      width: 30px;
+      height: 30px;
+      border-right: 1px solid rgba(0, 255, 157, 0.2);
+      border-top: 1px solid rgba(0, 255, 157, 0.2);
+      opacity: 0.5;
+    }
+    
+    .edit-profile-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .profile-pic-edit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.5rem;
+      border-radius: 12px;
+      background-color: rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .profile-pic-edit h4 {
+      font-family: 'Orbitron', sans-serif;
+      margin: 0;
+      color: #00ff9d;
+      letter-spacing: 1px;
+      position: relative;
+    }
+    
+    .profile-pic-edit h4::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 157, 0.7), transparent);
+    }
+    
+    .pic-preview {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background-color: #212121;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid rgba(0, 255, 157, 0.5);
+      box-shadow: 0 0 20px rgba(0, 255, 157, 0.3);
+      overflow: hidden;
+      position: relative;
+      transition: all 0.3s ease;
+      animation: profile-glow 3s infinite alternate;
+    }
+    
+    @keyframes profile-glow {
+      0% {
+        box-shadow: 0 0 15px rgba(0, 255, 157, 0.3);
+      }
+      100% {
+        box-shadow: 0 0 25px rgba(0, 255, 157, 0.5);
+      }
+    }
+    
+    .pic-preview::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.5));
+      z-index: 1;
+    }
+    
+    .pic-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .pic-options {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.2rem;
+      padding: 1rem;
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .pic-option {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background-color: #1a1a1a;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .pic-option::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at center, rgba(0, 255, 157, 0.1) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .pic-option:hover {
+      transform: scale(1.08) translateY(-5px);
+      border-color: rgba(0, 255, 157, 0.5);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .pic-option:hover::after {
+      opacity: 1;
+    }
+    
+    .pic-option.selected {
+      border-color: #00ff9d;
+      box-shadow: 0 0 15px rgba(0, 255, 157, 0.4);
+      transform: scale(1.08);
+    }
+    
+    .pic-option.selected::before {
+      content: '';
+      position: absolute;
+      bottom: 3px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 8px;
+      height: 8px;
+      background-color: #00ff9d;
+      border-radius: 50%;
+      box-shadow: 0 0 5px rgba(0, 255, 157, 0.7);
+    }
+    
+    .pic-option img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    
+    .upload-btn {
+      padding: 0.75rem 1.3rem;
+      background: linear-gradient(90deg, rgba(0, 0, 0, 0.7), rgba(34, 34, 34, 0.7));
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .upload-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    }
+    
+    .upload-btn:hover {
+      background-color: rgba(34, 34, 34, 0.8);
+      border-color: rgba(0, 255, 157, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      color: #ffffff;
+    }
+    
+    .upload-btn svg {
+      filter: drop-shadow(0 0 2px rgba(0, 255, 157, 0.5));
+    }
+    
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      background-color: rgba(10, 10, 10, 0.8);
+      padding: 1.5rem 2rem;
+      border-top: 1px solid rgba(0, 255, 157, 0.2);
+      position: relative;
+    }
+    
+    .modal-footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 157, 0.5), transparent);
+    }
+    
+    .modal-btn {
+      padding: 0.9rem 1.8rem;
+      border-radius: 8px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .modal-btn.cancel {
+      background: linear-gradient(45deg, rgba(30, 30, 30, 0.7), rgba(10, 10, 10, 0.7));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.8);
+    }
+    
+    .modal-btn.cancel:hover {
+      background-color: rgba(20, 20, 20, 0.9);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      color: #ffffff;
+    }
+    
+    .modal-btn.save {
+      background: linear-gradient(45deg, rgba(0, 150, 100, 0.2), rgba(0, 100, 70, 0.2));
+      border: 1px solid rgba(0, 255, 157, 0.4);
+      color: #00ff9d;
+      box-shadow: 0 0 15px rgba(0, 255, 157, 0.1);
+    }
+    
+    .modal-btn.save:hover {
+      background: linear-gradient(45deg, rgba(0, 180, 120, 0.3), rgba(0, 130, 90, 0.3));
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 255, 157, 0.2);
+      text-shadow: 0 0 5px rgba(0, 255, 157, 0.5);
+    }
+    
+    .modal-btn.save::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 157, 0.1), transparent);
+      transform: translateX(-100%);
+      transition: transform 1s;
+    }
+    
+    .modal-btn.save:hover::before {
+      transform: translateX(100%);
+    }
+
+    .save-confirmation {
+      position: absolute;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0, 255, 157, 0.2);
+      color: #00ff9d;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      text-align: center;
+      animation: popup 0.3s ease-out;
+      border: 1px solid rgba(0, 255, 157, 0.4);
+      box-shadow: 0 0 20px rgba(0, 255, 157, 0.3);
+      z-index: 100;
+    }
+    
+    .save-confirmation.fade-out {
+      opacity: 0;
+      transform: translate(-50%, -20px);
+      transition: all 0.5s ease;
+    }
+    
+    @keyframes popup {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+    }
+
+    .upload-btn.success {
+      background: linear-gradient(90deg, rgba(0, 100, 0, 0.7), rgba(0, 50, 0, 0.7));
+      border-color: rgba(0, 255, 157, 0.6);
+      color: #00ff9d;
+      box-shadow: 0 0 15px rgba(0, 255, 157, 0.4);
+    }
+  </style>
+  <script src="../js/main.js" defer></script>
+  <script src="../js/auth.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <h1><span class="neon-text">Skyblock</span> RMT</h1>
+    </div>
+    <nav>
+      <a href="../index.html" class="nav-link">Home</a>
+      <a href="login.html" class="nav-link">Login</a>
+      <a href="role-selection.html" class="nav-link">Register</a>
+      <a href="marketplace.html" class="nav-link">Marketplace</a>
+      <a href="action.html" class="nav-link">Action Center</a>
+      <a href="profile.html" class="nav-link active user-account-link" style="display: none;">My Account (<span class="username">User</span>)</a>
+    </nav>
+    <div class="mobile-nav-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="profile-container">
+      <div class="profile-header">
+        <div class="profile-cover"></div>
+        <button class="profile-edit-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+          </svg>
+          Edit Profile
+        </button>
+        <div class="profile-picture">
+          <img src="../images/buyer-icon.svg" alt="Profile" id="profile-image">
+        </div>
+        <h1 class="profile-name" id="profile-name">Username</h1>
+        <div class="profile-role" id="profile-role">Buyer</div>
+        
+        <div class="profile-stats">
+          <div class="stat">
+            <div class="stat-value">12</div>
+            <div class="stat-label">Purchases</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">8</div>
+            <div class="stat-label">Reviews</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">★ 4.9</div>
+            <div class="stat-label">Rating</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="profile-content">
+        <div class="profile-section">
+          <h2 class="profile-section-title">Account Information</h2>
+          <div class="profile-info-grid">
+            <div class="profile-info-item">
+              <div class="info-label">Username</div>
+              <div class="info-value" id="info-username">Username</div>
+            </div>
+            <div class="profile-info-item">
+              <div class="info-label">Email</div>
+              <div class="info-value" id="info-email">user@example.com</div>
+            </div>
+            <div class="profile-info-item">
+              <div class="info-label">Member Since</div>
+              <div class="info-value">June 2023</div>
+            </div>
+            <div class="profile-info-item">
+              <div class="info-label">Account Type</div>
+              <div class="info-value" id="info-role">Buyer</div>
+            </div>
+          </div>
+        </div>
+        
+        </div>
+        </div>
+        
+        <div class="profile-buttons">
+          <button class="profile-btn">Change Password</button>
+          <button class="profile-btn logout">Log Out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3 class="footer-title">Skyblock RMT</h3>
+        <p>The premier marketplace for Hypixel Skyblock trading.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="marketplace.html">Browse Market</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="role-selection.html">Register</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul class="footer-links">
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Skyblock RMT - All rights reserved.</p>
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="editProfileModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Edit Profile</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form class="edit-profile-form">
+          <div class="profile-pic-edit">
+            <h4>Profile Picture</h4>
+            <div class="pic-preview">
+              <img src="../images/buyer-icon.svg" alt="Profile" id="preview-image">
+            </div>
+            <div class="pic-options">
+              <div class="pic-option selected" data-pic="../images/buyer-icon.svg">
+                <img src="../images/buyer-icon.svg" alt="Buyer">
+              </div>
+            </div>
+            <label for="profilePicUpload" class="upload-btn" id="uploadCustomBtn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+              Upload Custom
+            </label>
+            <input type="file" id="profilePicUpload" accept="image/jpeg, image/png, image/gif, image/webp" style="display: none;" />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-btn cancel">Cancel</button>
+        <button class="modal-btn save">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Check if user is logged in, if not redirect to login page
+    document.addEventListener('DOMContentLoaded', () => {
+      const token = localStorage.getItem('skyblock_rmt_token');
+      if (!token) {
+        // User is not logged in, redirect to login page
+        window.location.href = 'login.html?returnTo=profile.html';
+      } else {
+        // User is logged in, populate profile data
+        const userData = JSON.parse(localStorage.getItem('skyblock_rmt_user'));
+        if (userData) {
+          // Update profile information
+          document.getElementById('profile-name').textContent = userData.username;
+          document.getElementById('info-username').textContent = userData.username;
+          document.getElementById('info-email').textContent = userData.email;
+          
+          // Update role information
+          const role = userData.role || 'Buyer';
+          document.getElementById('profile-role').textContent = role.charAt(0).toUpperCase() + role.slice(1);
+          document.getElementById('info-role').textContent = role.charAt(0).toUpperCase() + role.slice(1);
+          
+          // Update profile picture - check for saved custom image first
+          if (userData.profilePic) {
+            document.getElementById('profile-image').src = userData.profilePic;
+          } else if (role.toLowerCase() === 'seller') {
+            document.getElementById('profile-image').src = '../images/seller-icon.svg';
+          }
+        }
+      }
+
+      // Add logout functionality
+      document.querySelector('.profile-btn.logout').addEventListener('click', () => {
+        // Clear user data from localStorage
+        localStorage.removeItem('skyblock_rmt_token');
+        localStorage.removeItem('skyblock_rmt_user');
+        
+        // Redirect to homepage
+        window.location.href = '../index.html';
+      });
+
+      // Add functionality to top Edit Profile button
+      document.querySelector('.profile-edit-btn').addEventListener('click', function() {
+        // You can either redirect to an edit page or open a modal
+        // For now, let's make it trigger the same action as the bottom Edit Profile button
+        document.querySelector('.profile-btn.primary').click();
+      });
+
+      // Handle the edit profile modal
+      const editProfileModal = document.getElementById('editProfileModal');
+      const editProfileBtn = document.querySelector('.profile-edit-btn');
+      const modalCloseBtn = document.querySelector('.modal-close');
+      const modalCancelBtn = document.querySelector('.modal-btn.cancel');
+      const modalSaveBtn = document.querySelector('.modal-btn.save');
+      const picOptions = document.querySelectorAll('.pic-option');
+      const previewImage = document.getElementById('preview-image');
+      const profileImage = document.getElementById('profile-image');
+      
+      // Open modal when Edit Profile button is clicked
+      editProfileBtn.addEventListener('click', () => {
+        // Set the current profile picture in the preview
+        previewImage.src = profileImage.src;
+        
+        // Find and select the correct option
+        picOptions.forEach(option => {
+          if (option.getAttribute('data-pic') === profileImage.src) {
+            option.classList.add('selected');
+          } else {
+            option.classList.remove('selected');
+          }
+        });
+        
+        // Show the modal
+        editProfileModal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling
+      });
+      
+      // Close modal functions
+      const closeModal = () => {
+        editProfileModal.classList.remove('active');
+        document.body.style.overflow = ''; // Re-enable scrolling
+      };
+      
+      modalCloseBtn.addEventListener('click', closeModal);
+      modalCancelBtn.addEventListener('click', closeModal);
+      
+      // Click outside to close
+      editProfileModal.addEventListener('click', (e) => {
+        if (e.target === editProfileModal) {
+          closeModal();
+        }
+      });
+      
+      // Handle profile picture selection
+      picOptions.forEach(option => {
+        option.addEventListener('click', () => {
+          // Remove selected class from all options
+          picOptions.forEach(opt => opt.classList.remove('selected'));
+          
+          // Add selected class to clicked option
+          option.classList.add('selected');
+          
+          // Update preview image
+          const picSrc = option.getAttribute('data-pic');
+          previewImage.src = picSrc;
+        });
+      });
+      
+      // Fix custom image upload functionality
+      const fileInput = document.getElementById('profilePicUpload');
+      
+      // Using a direct event handler on the input element
+      fileInput.onchange = function(event) {
+        console.log('File selected:', event.target.files);
+        
+        if (!event.target.files || event.target.files.length === 0) {
+          console.warn('No file selected');
+          return;
+        }
+        
+        const file = event.target.files[0];
+        console.log('Processing file:', file.name, file.type, file.size);
+        
+        // Validate file type
+        if (!file.type.match('image.*')) {
+          alert('Please select a valid image file (JPEG, PNG, GIF)');
+          return;
+        }
+        
+        // Validate file size (max 2MB)
+        if (file.size > 2 * 1024 * 1024) {
+          alert('Image size should be less than 2MB');
+          return;
+        }
+        
+        // Use FileReader to load the image
+        const reader = new FileReader();
+        
+        // Handle errors
+        reader.onerror = function() {
+          console.error('FileReader error:', reader.error);
+          alert('Error reading file. Please try again.');
+        };
+        
+        // When file is loaded successfully
+        reader.onload = function(e) {
+          console.log('File loaded successfully');
+          
+          // Create an image element to verify the loaded data
+          const img = new Image();
+          
+          img.onload = function() {
+            console.log('Image verified, dimensions:', img.width, 'x', img.height);
+            
+            // Update the preview with the verified image
+            previewImage.src = reader.result;
+            
+            // Deselect all preset options
+            picOptions.forEach(option => {
+              option.classList.remove('selected');
+            });
+            
+            // Mark as custom image
+            previewImage.setAttribute('data-custom', 'true');
+            
+            // Provide visual feedback
+            const uploadBtn = document.getElementById('uploadCustomBtn');
+            uploadBtn.classList.add('success');
+            setTimeout(() => uploadBtn.classList.remove('success'), 1500);
+          };
+          
+          img.onerror = function() {
+            console.error('Invalid image data');
+            alert('The selected file is not a valid image. Please try another file.');
+          };
+          
+          // Verify the image data
+          img.src = reader.result;
+        };
+        
+        // Start reading the file
+        console.log('Starting to read file as data URL');
+        reader.readAsDataURL(file);
+      };
+      
+      // Modify the save button functionality to better handle the custom image
+      modalSaveBtn.addEventListener('click', () => {
+        try {
+          console.log('Save button clicked');
+          let newProfileImageSrc;
+          
+          // Determine which profile image to use
+          if (previewImage.hasAttribute('data-custom') && previewImage.getAttribute('data-custom') === 'true') {
+            console.log('Using custom uploaded image');
+            newProfileImageSrc = previewImage.src;
+          } else {
+            console.log('Using preset image option');
+            const selectedOption = document.querySelector('.pic-option.selected');
+            
+            if (!selectedOption) {
+              console.warn('No option selected, keeping current image');
+              newProfileImageSrc = profileImage.src;
+            } else {
+              newProfileImageSrc = selectedOption.getAttribute('data-pic');
+              console.log('Selected preset image:', newProfileImageSrc);
+            }
+          }
+          
+          // Update the profile image
+          if (newProfileImageSrc) {
+            console.log('Updating profile image');
+            profileImage.src = newProfileImageSrc;
+            
+            // Update in localStorage
+            try {
+              const userData = JSON.parse(localStorage.getItem('skyblock_rmt_user') || '{}');
+              userData.profilePic = newProfileImageSrc;
+              localStorage.setItem('skyblock_rmt_user', JSON.stringify(userData));
+              console.log('Profile data saved to localStorage');
+            } catch (storageError) {
+              console.error('Error saving to localStorage:', storageError);
+            }
+            
+            // Show success message
+            const confirmMsg = document.createElement('div');
+            confirmMsg.className = 'save-confirmation';
+            confirmMsg.textContent = 'Profile updated!';
+            document.querySelector('.modal-content').appendChild(confirmMsg);
+            
+            // Close modal after delay
+            setTimeout(() => {
+              confirmMsg.classList.add('fade-out');
+              setTimeout(() => {
+                confirmMsg.remove();
+                closeModal();
+              }, 500);
+            }, 1500);
+          } else {
+            console.warn('No profile image to save');
+            closeModal();
+          }
+        } catch (error) {
+          console.error('Error saving profile:', error);
+          alert('There was an error updating your profile. Please try again.');
+        }
+      });
+    });
+  </script>
+</body>
+</html> 

@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Details - Skyblock RMT Market</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/marketplace.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="../js/main.js" defer></script>
+  <script src="../js/auth.js" defer></script>
+  <script src="../js/marketplace.js" defer></script>
+  <script src="../js/orders.js" defer></script>
+  <style>
+    .product-container {
+      max-width: 1200px;
+      margin: 100px auto 50px;
+      padding: 0 20px;
+    }
+    
+    .product-grid {
+      display: grid;
+      grid-template-columns: minmax(300px, 1fr) 2fr;
+      gap: 30px;
+    }
+    
+    @media (max-width: 768px) {
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .product-image-container {
+      background-color: #171722;
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid rgba(255, 0, 64, 0.15);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    
+    .product-image {
+      width: 100%;
+      height: 300px;
+      object-fit: contain;
+    }
+    
+    .product-category-badge {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      padding: 5px 12px;
+      border-radius: 15px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+    
+    .product-info-container {
+      background-color: #171722;
+      border-radius: 12px;
+      padding: 30px;
+      border: 1px solid rgba(255, 0, 64, 0.15);
+    }
+    
+    .product-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 15px;
+      color: #ffffff;
+    }
+    
+    .product-seller-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .seller-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(255, 0, 64, 0.1);
+    }
+    
+    .seller-name {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #b0b0cc;
+      margin-right: 15px;
+    }
+    
+    .seller-rating {
+      display: flex;
+      align-items: center;
+    }
+    
+    .product-description {
+      color: #b0b0cc;
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+    
+    .product-meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .meta-label {
+      font-size: 0.9rem;
+      color: #7575a3;
+      margin-bottom: 5px;
+    }
+    
+    .meta-value {
+      font-size: 1rem;
+      color: #ffffff;
+      font-weight: 500;
+    }
+    
+    .product-price-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    
+    .product-price {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #00e676;
+      margin-right: 20px;
+    }
+    
+    .product-stock {
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      background-color: rgba(0, 230, 118, 0.1);
+      color: #00e676;
+      display: flex;
+      align-items: center;
+    }
+    
+    .product-stock svg {
+      width: 16px;
+      height: 16px;
+      margin-right: 5px;
+    }
+    
+    .action-buttons {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .btn-buy {
+      flex: 1;
+      padding: 15px;
+      background: linear-gradient(135deg, #00e676, #00c853);
+      color: #000000;
+      font-weight: 600;
+      font-family: 'Orbitron', sans-serif;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .btn-buy:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 15px rgba(0, 230, 118, 0.3);
+    }
+    
+    .btn-cart {
+      width: 50px;
+      height: 50px;
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .btn-cart:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(-3px);
+    }
+    
+    .btn-cart svg {
+      color: #ffffff;
+      width: 20px;
+      height: 20px;
+    }
+    
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      color: #b0b0cc;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+    }
+    
+    .back-button:hover {
+      color: #ffffff;
+      transform: translateX(-5px);
+    }
+    
+    .back-button svg {
+      margin-right: 5px;
+      width: 16px;
+      height: 16px;
+    }
+    
+    .similar-products {
+      margin-top: 50px;
+    }
+    
+    .similar-products h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+    
+    /* Add CSS for SkyCoins */
+    .price-in-coins {
+      font-size: 0.9rem;
+      margin-left: 5px;
+      color: #ff9900;
+      display: inline-flex;
+      align-items: center;
+    }
+    
+    .coin-icon {
+      width: 18px;
+      height: 18px;
+      margin-right: 3px;
+    }
+    
+    .btn-icon {
+      width: 18px;
+      height: 18px;
+      margin-right: 8px;
+    }
+    
+    .product-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+    }
+    
+    .primary-btn {
+      background: linear-gradient(90deg, #ff6600, #ff9900);
+      color: white;
+    }
+    
+    .primary-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(255, 153, 0, 0.3);
+    }
+    
+    .secondary-btn {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .secondary-btn:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-3px);
+    }
+    
+    .insufficient-coins {
+      margin-top: 1rem;
+      padding: 1rem;
+      background-color: rgba(255, 153, 0, 0.1);
+      border: 1px solid rgba(255, 153, 0, 0.3);
+      border-radius: 8px;
+      text-align: center;
+    }
+    
+    .insufficient-coins p {
+      margin: 0 0 0.5rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+    
+    .get-coins-btn {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background: linear-gradient(90deg, #ff6600, #ff9900);
+      color: white;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+    }
+    
+    .get-coins-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 3px 10px rgba(255, 153, 0, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <h1><span class="neon-text">Skyblock</span> RMT</h1>
+    </div>
+    <nav>
+      <a href="../index.html" class="nav-link">Home</a>
+      <a href="login.html" class="nav-link">Login</a>
+      <a href="role-selection.html" class="nav-link">Register</a>
+      <a href="marketplace.html" class="nav-link active">Marketplace</a>
+      <a href="action.html" class="nav-link">Action center</a>
+      <a href="seller-profile.html" class="nav-link user-account-link" style="display: none;">My Account: (<span class="username">User</span>)</a>
+    </nav>
+    <div class="mobile-nav-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </header>
+
+  <div class="product-container">
+    <a href="marketplace.html" class="back-button">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      Back to Marketplace
+    </a>
+    
+    <div class="product-grid">
+      <div class="product-image-container">
+        <span id="product-category-badge" class="product-category-badge coins">Coins</span>
+        <img id="product-image" src="../images/products/default.svg" alt="Product" class="product-image">
+      </div>
+      
+      <div class="product-info-container">
+        <h1 id="product-title" class="product-title">Product Title</h1>
+        
+        <div class="product-seller-row">
+          <div class="seller-avatar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ff0040" width="24" height="24">
+              <path d="M12 2a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3 3 3 0 0 1-3 3zm9 11v-1a7 7 0 0 0-7-7h-4a7 7 0 0 0-7 7v1h2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z"></path>
+            </svg>
+          </div>
+          <span id="product-seller" class="seller-name">Seller Name</span>
+          <div id="product-rating" class="seller-rating"></div>
+        </div>
+        
+        <p id="product-description" class="product-description">Product description will be displayed here.</p>
+        
+        <div class="product-meta">
+          <div class="meta-item">
+            <span class="meta-label">Category</span>
+            <span id="product-category" class="meta-value">Coins</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Available</span>
+            <span id="product-quantity" class="meta-value">5 in stock</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Listed</span>
+            <span id="product-time" class="meta-value">Just now</span>
+          </div>
+        </div>
+        
+        <div class="product-price-container">
+          <div class="price">
+            <div class="price-label">Price</div>
+            <div class="price-amount">
+              $<span id="product-price">0.00</span>
+              <span class="price-in-coins">
+                (<img src="../images/coin-icon.svg" alt="SkyCoins" class="coin-icon"> <span id="product-price-coins">0</span>)
+              </span>
+            </div>
+          </div>
+          <div class="product-stock">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 11 12 14 22 4"></polyline>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+            </svg>
+            In Stock
+          </div>
+        </div>
+        
+        <div class="action-buttons">
+          <button id="buy-now-btn" class="product-btn primary-btn">
+            <img src="../images/coin-icon.svg" alt="SkyCoins" class="btn-icon">
+            <span>Buy with SkyCoins</span>
+          </button>
+          <button id="add-to-cart-btn" class="product-btn secondary-btn">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Add to Cart</span>
+          </button>
+        </div>
+        <div class="insufficient-coins" id="insufficient-coins" style="display: none;">
+          <p>You don't have enough SkyCoins for this purchase.</p>
+          <a href="buy-coins.html" class="get-coins-btn">Get More SkyCoins</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3 class="footer-title">Skyblock RMT</h3>
+        <p>The premier marketplace for Hypixel Skyblock trading.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="marketplace.html">Browse Market</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="role-selection.html">Register</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul class="footer-links">
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Skyblock RMT - All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Get product ID from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const productId = urlParams.get('id');
+      
+      // If no product ID, redirect to marketplace
+      if (!productId) {
+        window.location.href = 'marketplace.html';
+        return;
+      }
+      
+      // Get listings from localStorage
+      const listings = JSON.parse(localStorage.getItem('skyblock_rmt_listings')) || [];
+      
+      // Find the specific listing
+      const listing = listings.find(item => item.id === productId);
+      
+      // If listing not found, redirect to marketplace
+      if (!listing) {
+        window.location.href = 'marketplace.html';
+        return;
+      }
+      
+      // Update product details
+      document.getElementById('product-title').textContent = listing.title;
+      document.getElementById('product-description').textContent = listing.description;
+      document.getElementById('product-price').textContent = listing.price;
+      
+      // Calculate SkyCoins price (1 SkyCoins = $0.10)
+      const skyCoinsPrice = Math.ceil(parseFloat(listing.price) * 10);
+      document.getElementById('product-price-coins').textContent = skyCoinsPrice;
+      
+      // Set seller name
+      document.getElementById('product-seller').textContent = listing.seller;
+      
+      // Set stock status
+      const stockStatus = document.getElementById('product-quantity');
+      if (listing.quantity > 5) {
+        stockStatus.textContent = 'In Stock';
+        stockStatus.className = 'in-stock';
+      } else if (listing.quantity > 0) {
+        stockStatus.textContent = 'Low Stock';
+        stockStatus.className = 'low-stock';
+      } else {
+        stockStatus.textContent = 'Out of Stock';
+        stockStatus.className = 'out-of-stock';
+      }
+      
+      // Set product image
+      const productImage = document.getElementById('product-image');
+      if (listing.image) {
+        productImage.src = listing.image;
+      } else if (listing.category === 'coins') {
+        productImage.src = '../images/4648267406545a74a60b1d.jpg';
+      } else {
+        productImage.src = '../images/placeholder.png';
+      }
+      
+      // Handle Buy Now button
+      document.getElementById('buy-now-btn').addEventListener('click', () => {
+        // Check if user is logged in
+        const token = localStorage.getItem('skyblock_rmt_token');
+        if (!token) {
+          window.location.href = 'login.html?returnTo=product.html?id=' + productId;
+          return;
+        }
+        
+        // Get user data
+        const userData = JSON.parse(localStorage.getItem('skyblock_rmt_user'));
+        
+        // Check if user has enough SkyCoins
+        if (!userData.skycoins || userData.skycoins < skyCoinsPrice) {
+          document.getElementById('insufficient-coins').style.display = 'block';
+          return;
+        }
+        
+        // Confirm purchase
+        if (confirm(`Are you sure you want to purchase "${listing.title}" for ${skyCoinsPrice} SkyCoins?`)) {
+          // Deduct SkyCoins from user balance
+          userData.skycoins -= skyCoinsPrice;
+          localStorage.setItem('skyblock_rmt_user', JSON.stringify(userData));
+          
+          // Create order
+          const orders = JSON.parse(localStorage.getItem('skyblock_rmt_orders')) || [];
+          const newOrder = {
+            id: 'order-' + Date.now(),
+            buyer: userData.username,
+            seller: listing.seller,
+            listingId: listing.id,
+            item: listing.title,
+            amount: listing.price,
+            skycoins: skyCoinsPrice,
+            date: new Date().toISOString(),
+            status: 'pending'
+          };
+          
+          orders.push(newOrder);
+          localStorage.setItem('skyblock_rmt_orders', JSON.stringify(orders));
+          
+          // Redirect to orders page
+          alert('Purchase successful! The seller will contact you soon with delivery details.');
+          window.location.href = 'orders.html';
+        }
+      });
+      
+      // Handle Add to Cart button (this would be implemented in a real site)
+      document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+        alert('Shopping cart functionality is not implemented yet.');
+      });
+    });
+  </script>
+</body>
+</html> 

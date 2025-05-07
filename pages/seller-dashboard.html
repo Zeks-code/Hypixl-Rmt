@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Seller Dashboard - Skyblock RMT Market</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="../js/main.js" defer></script>
+  <script src="../js/auth.js" defer></script>
+  <script src="../js/profile-router.js" defer></script>
+  <script src="../js/dashboard.js" defer></script>
+  <style>
+    :root {
+      --sidebar-width: 260px;
+      --header-height: 70px;
+      --primary: #ff0040;
+      --primary-light: #ff3366;
+      --primary-dark: #cc0033;
+      --accent: #00ccff;
+      --accent-light: #33ddff;
+      --accent-dark: #0099cc;
+      --success: #00e676;
+      --warning: #ffab00;
+      --danger: #ff1744;
+      --info: #00b0ff;
+      --bg-dark: #0e0e16;
+      --bg-card: #171722;
+      --bg-card-hover: #1c1c2a;
+      --border-color: #2a2a40;
+      --text-primary: #ffffff;
+      --text-secondary: #b0b0cc;
+      --text-muted: #7575a3;
+      --card-radius: 12px;
+      --btn-radius: 8px;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.25);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.3);
+      --transition: all 0.3s ease;
+      --font-primary: 'Poppins', sans-serif;
+      --font-heading: 'Orbitron', sans-serif;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: var(--font-primary);
+      background-color: var(--bg-dark);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    
+    /* Scrollbar Styling */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 3px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+    
+    /* Header Styles */
+    .main-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--header-height);
+      background-color: rgba(12, 12, 20, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(42, 42, 64, 0.5);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 30px;
+      z-index: 1000;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+    }
+    
+    .brand {
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo-skyblock {
+      color: var(--primary);
+      text-shadow: 0 0 10px rgba(255, 0, 64, 0.5);
+    }
+    
+    .logo-rmt {
+      color: white;
+      margin-left: 5px;
+    }
+    
+    .top-nav {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .nav-link {
+      margin-right: 25px;
+      color: var(--text-secondary);
+      font-weight: 500;
+      transition: var(--transition);
+      padding: 8px 15px;
+      border-radius: var(--btn-radius);
+    }
+    
+    .nav-link:hover {
+      color: var(--text-primary);
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+    
+    .nav-link.active {
+      color: var(--primary);
+      background-color: rgba(255, 0, 64, 0.1);
+    }
+    
+    .user-pill {
+      display: flex;
+      align-items: center;
+      background-color: rgba(255, 0, 64, 0.1);
+      border-radius: 24px;
+      padding: 5px 18px 5px 5px;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 1px solid rgba(255, 0, 64, 0.2);
+    }
+    
+    .user-pill:hover {
+      background-color: rgba(255, 0, 64, 0.15);
+      border-color: rgba(255, 0, 64, 0.3);
+    }
+    
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Sidebar Styles */
+    .sidebar {
+      position: fixed;
+      top: var(--header-height);
+      left: 0;
+      width: var(--sidebar-width);
+      height: calc(100vh - var(--header-height));
+      background-color: var(--bg-card);
+      border-right: 1px solid var(--border-color);
+      padding: 20px 0;
+      overflow-y: auto;
+      z-index: 100;
+      transition: var(--transition);
+    }
+    
+    .profile-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 20px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 20px;
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+    
+    .profile-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(255, 0, 64, 0.2), rgba(255, 0, 64, 0.4));
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+      border: 3px solid rgba(255, 0, 64, 0.2);
+      box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    
+    .profile-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .profile-avatar::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6);
+    }
+    
+    .profile-info {
+      text-align: center;
+    }
+    
+    .profile-name {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, var(--primary-light), var(--text-primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .profile-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      background-color: rgba(0, 230, 118, 0.15);
+      color: var(--success);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      margin-bottom: 10px;
+      border: 1px solid rgba(0, 230, 118, 0.3);
+    }
+    
+    .profile-stars {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    
+    .profile-stars span {
+      color: var(--warning);
+    }
+    
+    .side-nav {
+      padding: 0 15px;
+    }
+    
+    .nav-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      border-radius: var(--btn-radius);
+      transition: var(--transition);
+      font-weight: 500;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .nav-item:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: var(--text-primary);
+    }
+    
+    .nav-item.active {
+      background-color: rgba(255, 0, 64, 0.1);
+      color: var(--primary);
+      box-shadow: 0 4px 12px rgba(255, 0, 64, 0.1);
+    }
+    
+    .nav-item.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(to bottom, var(--primary-light), var(--primary));
+      border-radius: 0 2px 2px 0;
+    }
+    
+    .nav-item svg {
+      margin-right: 15px;
+      width: 20px;
+      height: 20px;
+      transition: var(--transition);
+    }
+    
+    .nav-item:hover svg {
+      transform: translateY(-2px);
+    }
+    
+    .nav-item.active svg {
+      color: var(--primary);
+    }
+    
+    .nav-divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border-color), transparent);
+      margin: 15px 15px 20px;
+      opacity: 0.7;
+    }
+    
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      margin: 20px 15px;
+      padding: 12px 15px;
+      color: var(--text-secondary);
+      transition: var(--transition);
+      border-radius: var(--btn-radius);
+      background-color: rgba(255, 0, 64, 0.05);
+      border: 1px solid transparent;
+    }
+    
+    .logout-btn:hover {
+      background-color: rgba(255, 0, 64, 0.1);
+      color: var(--primary);
+      border-color: rgba(255, 0, 64, 0.2);
+      transform: translateY(-2px);
+    }
+    
+    .logout-btn svg {
+      margin-right: 15px;
+      width: 20px;
+      height: 20px;
+    }
+    
+    /* Main Content Styles */
+    .main-content {
+      margin-left: 0;
+      margin-top: var(--header-height);
+      padding: 30px;
+      width: 100%;
+      position: relative;
+    }
+    
+    /* Dashboard Grid Layout */
+    .dashboard-content-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 25px;
+    }
+    
+    .dashboard-content-main {
+      width: 100%;
+    }
+    
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      background-color: rgba(23, 23, 34, 0.6);
+      padding: 20px;
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-color);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .page-header::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 0, 64, 0.05) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    
+    .page-title {
+      font-size: 2rem;
+      font-weight: 700;
+      font-family: var(--font-heading);
+      letter-spacing: 0.5px;
+      position: relative;
+    }
+    
+    .page-title .accent {
+      background: linear-gradient(to right, var(--primary), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: relative;
+    }
+    
+    .filter-dropdown {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--btn-radius);
+      padding: 10px 20px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .filter-dropdown:hover {
+      border-color: var(--primary);
+      color: var(--text-primary);
+    }
+    
+    .filter-dropdown span {
+      color: var(--primary);
+      font-weight: 600;
+      margin: 0 4px;
+    }
+    
+    .filter-dropdown::after {
+      content: '▼';
+      font-size: 0.7rem;
+      margin-left: 8px;
+      color: var(--primary);
+    }
+    
+    /* Dashboard Stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 25px;
+      margin-bottom: 30px;
+    }
+    
+    .stat-card {
+      background-color: var(--bg-card);
+      border-radius: var(--card-radius);
+      padding: 25px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border-color);
+    }
+    
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      transition: var(--transition);
+    }
+    
+    .stat-card:nth-child(1)::before {
+      background: linear-gradient(to right, var(--primary), var(--primary-light));
+    }
+    
+    .stat-card:nth-child(2)::before {
+      background: linear-gradient(to right, var(--accent), var(--accent-light));
+    }
+    
+    .stat-card:nth-child(3)::before {
+      background: linear-gradient(to right, var(--warning), #ffc740);
+    }
+    
+    .stat-card:nth-child(4)::before {
+      background: linear-gradient(to right, var(--success), #4dffad);
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .stat-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    
+    .stat-value {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .stat-card:nth-child(1) .stat-value {
+      color: var(--primary-light);
+    }
+    
+    .stat-card:nth-child(2) .stat-value {
+      color: var(--accent-light);
+    }
+    
+    .stat-card:nth-child(3) .stat-value {
+      color: var(--warning);
+    }
+    
+    .stat-card:nth-child(4) .stat-value {
+      color: var(--success);
+    }
+    
+    .stat-label {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 500;
+    }
+    
+    .stat-trend {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--success);
+      display: flex;
+      align-items: center;
+      margin-top: auto;
+    }
+    
+    .stat-trend::before {
+      content: '▲';
+      margin-right: 5px;
+      font-size: 0.8rem;
+    }
+    
+    .stat-trend.negative {
+      color: var(--danger);
+    }
+    
+    .stat-trend.negative::before {
+      content: '▼';
+    }
+    
+    .stat-trend.neutral {
+      color: var(--text-muted);
+    }
+    
+    .stat-trend.neutral::before {
+      content: '•';
+    }
+    
+    /* Responsive Dashboard Grid */
+    @media (max-width: 1200px) {
+      .dashboard-content-grid {
+        grid-template-columns: 250px 1fr;
+      }
+    }
+    
+    /* Media Queries */
+    @media (max-width: 992px) {
+      .dashboard-content-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .dashboard-menu {
+        margin-bottom: 20px;
+        position: relative;
+      }
+      
+      .dashboard-content-grid.mobile-active .dashboard-menu {
+        position: fixed;
+        top: calc(var(--header-height) + 30px);
+        left: 30px;
+        right: 30px;
+        z-index: 100;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: var(--shadow-lg);
+      }
+      
+      .page-title {
+        font-size: 1.8rem;
+      }
+      
+      .mobile-menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background-color: rgba(255, 0, 64, 0.1);
+        cursor: pointer;
+        margin-right: 15px;
+        border: 1px solid rgba(255, 0, 64, 0.2);
+      }
+      
+      .mobile-menu-toggle span {
+        position: relative;
+        width: 20px;
+        height: 2px;
+        background-color: var(--primary);
+        display: block;
+        transition: var(--transition);
+      }
+      
+      .mobile-menu-toggle span::before,
+      .mobile-menu-toggle span::after {
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 2px;
+        background-color: var(--primary);
+        display: block;
+        transition: var(--transition);
+      }
+      
+      .mobile-menu-toggle span::before {
+        transform: translateY(-6px);
+      }
+      
+      .mobile-menu-toggle span::after {
+        transform: translateY(6px);
+      }
+      
+      .mobile-menu-toggle.active span {
+        background-color: transparent;
+      }
+      
+      .mobile-menu-toggle.active span::before {
+        transform: rotate(45deg);
+      }
+      
+      .mobile-menu-toggle.active span::after {
+        transform: rotate(-45deg);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .main-header {
+        padding: 0 15px;
+      }
+      
+      .nav-link {
+        display: none;
+      }
+      
+      .nav-link:last-child {
+        display: flex;
+      }
+      
+      .dashboard-menu {
+        padding: 15px;
+      }
+      
+      .dashboard-menu .nav-item {
+        padding: 12px;
+      }
+      
+      .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 15px;
+      }
+      
+      .filter-dropdown {
+        width: 100%;
+        justify-content: space-between;
+      }
+      
+      .dashboard-content-grid.mobile-active .dashboard-menu {
+        left: 15px;
+        right: 15px;
+        top: calc(var(--header-height) + 15px);
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .dashboard-menu .nav-item svg {
+        margin-right: 10px;
+        width: 18px;
+        height: 18px;
+      }
+      
+      .dashboard-menu-title {
+        font-size: 1rem;
+      }
+      
+      .stat-value {
+        font-size: 2rem;
+      }
+      
+      .stat-label {
+        font-size: 0.9rem;
+      }
+    }
+    
+    /* Dashboard Menu - Vertical Layout */
+    .dashboard-menu {
+      display: flex;
+      flex-direction: column;
+      background-color: var(--bg-card);
+      padding: 20px;
+      border-radius: var(--card-radius);
+      margin-bottom: 30px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .dashboard-menu::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      opacity: 0.8;
+    }
+    
+    .dashboard-menu .nav-item {
+      display: flex;
+      align-items: center;
+      padding: 14px 16px;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+      border-radius: var(--btn-radius);
+      transition: var(--transition);
+      border: 1px solid transparent;
+      font-weight: 500;
+    }
+    
+    .dashboard-menu .nav-item:hover {
+      background-color: rgba(255, 0, 64, 0.05);
+      color: var(--text-primary);
+      border-color: rgba(255, 0, 64, 0.1);
+      transform: translateX(3px);
+    }
+    
+    .dashboard-menu .nav-item.active {
+      background-color: rgba(255, 0, 64, 0.1);
+      color: var(--primary);
+      border-color: rgba(255, 0, 64, 0.2);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .dashboard-menu .nav-item.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(to bottom, var(--primary-light), var(--primary));
+      border-radius: 0 2px 2px 0;
+    }
+    
+    .dashboard-menu .nav-item svg {
+      margin-right: 15px;
+      width: 20px;
+      height: 20px;
+      transition: var(--transition);
+    }
+    
+    .dashboard-menu .nav-item:hover svg,
+    .dashboard-menu .nav-item.active svg {
+      color: var(--primary);
+    }
+    
+    .dashboard-menu-title {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+    }
+    
+    .dashboard-menu-title::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 18px;
+      background-color: var(--primary);
+      margin-right: 10px;
+      border-radius: 2px;
+    }
+    
+    /* Dashboard Cards */
+    .card {
+      background-color: var(--bg-card);
+      border-radius: var(--card-radius);
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      margin-bottom: 30px;
+    }
+    
+    .card-title {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      padding: 20px;
+      border-bottom: 1px solid var(--border-color);
+      margin: 0;
+    }
+    
+    .card-content {
+      padding: 20px;
+    }
+    
+    /* Dashboard Table */
+    .dashboard-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+    
+    .dashboard-table th {
+      text-align: left;
+      padding: 12px 15px;
+      color: var(--text-secondary);
+      font-weight: 500;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .dashboard-table td {
+      padding: 12px 15px;
+      border-bottom: 1px solid rgba(42, 42, 64, 0.5);
+    }
+    
+    .dashboard-table tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .dashboard-table tr:hover td {
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+    
+    .dashboard-table .product-title {
+      max-width: 200px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .dashboard-table .amount {
+      color: var(--primary);
+      font-weight: 500;
+    }
+    
+    .dashboard-table a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    
+    .dashboard-table a:hover {
+      text-decoration: underline;
+    }
+    
+    /* Empty State */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    
+    .empty-icon {
+      width: 50px;
+      height: 50px;
+      margin-bottom: 20px;
+      color: var(--text-muted);
+    }
+    
+    .empty-state h4 {
+      margin-bottom: 10px;
+      color: var(--text-primary);
+    }
+    
+    .empty-state p {
+      color: var(--text-secondary);
+      max-width: 300px;
+    }
+    
+    /* Loading State */
+    .loader {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+  <!-- Main Header -->
+  <header class="main-header">
+    <div class="brand">
+      <div class="mobile-menu-toggle">
+        <span></span>
+      </div>
+      <div class="logo">
+        <span class="logo-skyblock">Skyblock</span>
+        <span class="logo-rmt">RMT</span>
+      </div>
+    </div>
+    
+    <nav class="top-nav">
+      <a href="../index.html" class="nav-link">Home</a>
+      <a href="marketplace.html" class="nav-link">Marketplace</a>
+      <a href="seller-dashboard.html" class="nav-link active">Dashboard</a>
+      <div class="user-pill">
+        <div class="user-avatar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </div>
+        <span class="username">SellerName</span>
+      </div>
+    </nav>
+  </header>
+  
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="page-header">
+      <h1 class="page-title">
+        <span id="profile-name">Seller</span> <span class="accent">Dashboard</span>
+      </h1>
+      <div class="filter-dropdown">
+        Last <span>30</span> Days <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+    </div>
+    
+    <div class="dashboard-content-grid">
+      <!-- Vertical Menu -->
+      <div class="dashboard-menu">
+        <h3 class="dashboard-menu-title">Dashboard Menu</h3>
+        <a href="#" class="nav-item active">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="9"></rect>
+            <rect x="14" y="3" width="7" height="5"></rect>
+            <rect x="14" y="12" width="7" height="9"></rect>
+            <rect x="3" y="16" width="7" height="5"></rect>
+          </svg>
+          Dashboard
+        </a>
+        <a href="my-listings.html" class="nav-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+          </svg>
+          My Listings
+        </a>
+        <a href="create-listing.html" class="nav-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          Create Listing
+        </a>
+        <a href="orders.html" class="nav-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          Orders
+        </a>
+        <a href="login.html" class="nav-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          Logout
+        </a>
+      </div>
+      
+      <!-- Main Dashboard Content -->
+      <div class="dashboard-content-main">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value">$0.00</div>
+            <div class="stat-label">Total Sales</div>
+            <div class="stat-trend">0%</div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-value">0</div>
+            <div class="stat-label">Orders</div>
+            <div class="stat-trend">0%</div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-value">0</div>
+            <div class="stat-label">Active Listings</div>
+            <div class="stat-trend neutral">0%</div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-value">0.0</div>
+            <div class="stat-label">Rating</div>
+            <div class="stat-trend">0</div>
+          </div>
+        </div>
+        
+        <div class="dashboard-section" id="section-dashboard">
+          <div class="card">
+            <h3 class="card-title">Recent Orders</h3>
+            <div class="card-content" id="recent-orders">
+              <div class="loader">Loading recent orders...</div>
+            </div>
+          </div>
+          
+          <div class="card">
+            <h3 class="card-title">Recent Listings</h3>
+            <div class="card-content" id="recent-listings">
+              <div class="loader">Loading recent listings...</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Additional Dashboard Sections -->
+      </div>
+    </div>
+  </main>
+  
+  <script>
+    // Check if user is logged in, if not redirect to login page
+    document.addEventListener('DOMContentLoaded', () => {
+      const token = localStorage.getItem('skyblock_rmt_token');
+      if (!token) {
+        // User is not logged in, redirect to login page
+        window.location.href = 'login.html?returnTo=seller-dashboard.html';
+        return;
+      } 
+      
+      // User is logged in, check if they're a seller
+      const userData = JSON.parse(localStorage.getItem('skyblock_rmt_user'));
+      if (userData) {
+        // Check role and redirect if necessary
+        if (userData.role && userData.role.toLowerCase() !== 'seller') {
+          window.location.href = 'buyer-profile.html';
+          return;
+        }
+        
+        // Update profile information
+        document.querySelector('.username').textContent = userData.username || 'Seller';
+        
+        // Update dashboard title with profile name
+        document.getElementById('profile-name').textContent = userData.username || 'Seller';
+        
+        // Update page title
+        document.title = `${userData.username || 'Seller'} Dashboard - Skyblock RMT Market`;
+      }
+      
+      // Handle dashboard vertical menu clicks
+      const dashboardMenuItems = document.querySelectorAll('.dashboard-menu .nav-item');
+      dashboardMenuItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+          // Get the menu text to determine which page to show
+          const menuText = item.textContent.trim();
+          
+          // Only prevent default for menu items that should be handled in-page
+          if (item.getAttribute('href') === '#') {
+            e.preventDefault();
+            
+            // Remove active class from all items
+            dashboardMenuItems.forEach(nav => nav.classList.remove('active'));
+            
+            // Add active class to clicked item
+            item.classList.add('active');
+            
+            console.log(`Dashboard menu item clicked: ${menuText}`);
+            
+            // Handle navigation based on menu item clicked
+            switch(menuText) {
+              case 'My Listings':
+                window.location.href = 'my-listings.html';
+                break;
+              case 'Create Listing':
+                window.location.href = 'create-listing.html';
+                break;
+              case 'Orders':
+                window.location.href = 'orders.html';
+                break;
+              case 'Dashboard':
+              default:
+                // Stay on the current dashboard page
+                showDashboardSection('dashboard');
+                break;
+            }
+          }
+        });
+      });
+      
+      // Function to show different dashboard sections
+      function showDashboardSection(sectionName) {
+        // Hide all sections
+        const sections = document.querySelectorAll('.dashboard-section');
+        sections.forEach(section => section.style.display = 'none');
+        
+        // Show the selected section
+        const sectionToShow = document.getElementById(`section-${sectionName.toLowerCase().replace(/\s+/g, '-')}`);
+        if (sectionToShow) {
+          sectionToShow.style.display = 'block';
+        }
+      }
+      
+      // Mobile menu toggle functionality
+      const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+      if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener('click', () => {
+          document.querySelector('.dashboard-content-grid').classList.toggle('mobile-active');
+          mobileMenuToggle.classList.toggle('active');
+        });
+      }
+    });
+  </script>
+</body>
+</html> 

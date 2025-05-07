@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Buy SkyCoins - Skyblock RMT Market</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #0a0a0a;
+      color: #ffffff;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 100px auto 3rem;
+      padding: 0 1.5rem;
+    }
+    
+    .coins-container {
+      background-color: #121212;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    
+    .coins-header {
+      background: linear-gradient(135deg, #1a1a1a, #222222);
+      padding: 2.5rem 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, rgba(255, 102, 0, 0.05), rgba(255, 204, 0, 0.05));
+      z-index: 0;
+      overflow: hidden;
+    }
+    
+    .header-bg::before {
+      content: '';
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      top: -50%;
+      left: -50%;
+      background: radial-gradient(circle, rgba(255, 153, 0, 0.1) 0%, transparent 70%);
+      animation: rotate 20s infinite linear;
+    }
+    
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .coins-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin: 0;
+      padding-bottom: 0.5rem;
+      background: linear-gradient(90deg, #ff6600, #ffcc00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 0 15px rgba(255, 153, 0, 0.2);
+    }
+    
+    .coins-subtitle {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 1rem;
+      margin: 0.5rem 0 0;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .coins-content {
+      padding: 2rem;
+    }
+    
+    .balance-card {
+      background: linear-gradient(135deg, rgba(255, 102, 0, 0.1), rgba(255, 204, 0, 0.1));
+      border: 1px solid rgba(255, 153, 0, 0.3);
+      border-radius: 12px;
+      padding: 2.2rem 1.8rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    
+    .balance-info {
+      flex: 1;
+      min-width: 200px;
+    }
+    
+    .balance-label {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 1;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 500;
+    }
+    
+    .balance-amount {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: #ff9900;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 0 10px rgba(255, 153, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .coin-icon {
+      width: 40px;
+      height: 40px;
+    }
+    
+    .balance-actions {
+      flex: 1;
+      min-width: 200px;
+    }
+    
+    .balance-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 153, 0, 0.05) 0%, transparent 70%);
+      animation: pulse 15s infinite linear;
+      z-index: 0;
+    }
+    
+    @keyframes pulse {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .coin-packages {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .coin-package {
+      background-color: rgba(255,255,255,0.03);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    
+    .coin-package:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      border-color: rgba(255, 153, 0, 0.3);
+    }
+    
+    .package-popular {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: linear-gradient(90deg, #ff6600, #ff9900);
+      color: white;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border-radius: 20px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    
+    .package-amount {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 0.5rem;
+      color: #ffffff;
+    }
+    
+    .package-amount img {
+      width: 28px;
+      height: 28px;
+    }
+    
+    .package-price {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #ff9900;
+      margin-bottom: 1.5rem;
+    }
+    
+    .package-price .original {
+      text-decoration: line-through;
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.9rem;
+      margin-right: 8px;
+    }
+    
+    .package-info {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 1.5rem;
+    }
+    
+    .package-bonus {
+      display: inline-block;
+      background-color: rgba(255, 153, 0, 0.1);
+      color: #ff9900;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .btn {
+      padding: 0.9rem 1.8rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.95rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      letter-spacing: 0.5px;
+      font-weight: 500;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      width: 100%;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(90deg, rgba(255, 102, 0, 0.8), rgba(255, 153, 0, 0.8));
+      border: none;
+      color: #ffffff;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transform: translateX(-100%);
+    }
+    
+    .btn-primary:hover {
+      background: linear-gradient(90deg, rgba(255, 102, 0, 1), rgba(255, 153, 0, 1));
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(255, 102, 0, 0.3);
+    }
+    
+    .btn-primary:hover::after {
+      animation: shimmer 1.5s infinite;
+    }
+    
+    @keyframes shimmer {
+      0% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(100%);
+      }
+    }
+    
+    .feature-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    
+    .feature-item {
+      background-color: rgba(255,255,255,0.03);
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .feature-icon {
+      width: 50px;
+      height: 50px;
+      background-color: rgba(255, 153, 0, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    
+    .feature-icon img {
+      width: 25px;
+      height: 25px;
+    }
+    
+    .feature-content h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 0 0 0.5rem;
+      color: #ffffff;
+    }
+    
+    .feature-content p {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.6);
+      margin: 0;
+    }
+    
+    .payment-methods {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 3rem;
+      padding: 1.5rem;
+      background-color: rgba(255,255,255,0.02);
+      border-radius: 8px;
+    }
+    
+    .payment-method {
+      opacity: 0.5;
+      filter: grayscale(0.8);
+      transition: all 0.3s;
+    }
+    
+    .payment-method:hover {
+      opacity: 1;
+      filter: grayscale(0);
+    }
+    
+    @media (max-width: 768px) {
+      .balance-card {
+        flex-direction: column;
+      }
+      
+      .balance-info, .balance-actions {
+        width: 100%;
+      }
+      
+      .feature-list {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <script src="../js/main.js" defer></script>
+  <script src="../js/auth.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <h1><span class="neon-text">Skyblock</span> RMT</h1>
+    </div>
+    <nav>
+      <a href="../index.html" class="nav-link">Home</a>
+      <a href="login.html" class="nav-link">Login</a>
+      <a href="role-selection.html" class="nav-link">Register</a>
+      <a href="marketplace.html" class="nav-link">Marketplace</a>
+      <a href="action.html" class="nav-link">Action center</a>
+      <a href="buy-coins.html" class="nav-link active">
+        <img src="../images/coin-icon.svg" alt="SkyCoins" style="width: 16px; height: 16px; margin-right: 4px; vertical-align: -2px;">
+        SkyCoins
+      </a>
+      <a href="seller-profile.html" class="nav-link username-link" style="display: none;">My Account: (<span class="username">User</span>)</a>
+    </nav>
+    <div class="mobile-nav-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="coins-container">
+      <div class="coins-header">
+        <div class="header-bg"></div>
+        <h1 class="coins-title">SkyCoins</h1>
+        <p class="coins-subtitle">The official currency of Skyblock RMT Market</p>
+      </div>
+      
+      <div class="coins-content">
+        <div class="balance-card">
+          <div class="balance-info">
+            <div class="balance-label">Your Balance</div>
+            <div class="balance-amount">
+              <img src="../images/coin-icon.svg" alt="SkyCoins" class="coin-icon">
+              <span id="coin-balance">0</span>
+            </div>
+          </div>
+          <div class="balance-actions">
+            <button class="btn btn-primary" onclick="location.href='marketplace.html'">Shop Now</button>
+          </div>
+        </div>
+        
+        <h2 style="font-family: 'Orbitron', sans-serif; margin-bottom: 1.5rem;">Buy SkyCoins</h2>
+        
+        <div class="coin-packages">
+          <div class="coin-package" onclick="selectPackage(100, 10)">
+            <div class="package-amount">
+              <img src="../images/coin-icon.svg" alt="SkyCoins">
+              100
+            </div>
+            <div class="package-price">$10.00</div>
+            <div class="package-info">Perfect for small purchases</div>
+            <button class="btn btn-primary">Buy Now</button>
+          </div>
+          
+          <div class="coin-package" onclick="selectPackage(500, 45)">
+            <div class="package-amount">
+              <img src="../images/coin-icon.svg" alt="SkyCoins">
+              500
+            </div>
+            <div class="package-price">
+              <span class="original">$50.00</span>
+              $45.00
+            </div>
+            <div class="package-bonus">10% BONUS</div>
+            <div class="package-info">Most popular choice</div>
+            <button class="btn btn-primary">Buy Now</button>
+            <div class="package-popular">Popular</div>
+          </div>
+          
+          <div class="coin-package" onclick="selectPackage(1000, 80)">
+            <div class="package-amount">
+              <img src="../images/coin-icon.svg" alt="SkyCoins">
+              1000
+            </div>
+            <div class="package-price">
+              <span class="original">$100.00</span>
+              $80.00
+            </div>
+            <div class="package-bonus">20% BONUS</div>
+            <div class="package-info">Best value for money</div>
+            <button class="btn btn-primary">Buy Now</button>
+          </div>
+          
+          <div class="coin-package" onclick="selectPackage(2500, 175)">
+            <div class="package-amount">
+              <img src="../images/coin-icon.svg" alt="SkyCoins">
+              2500
+            </div>
+            <div class="package-price">
+              <span class="original">$250.00</span>
+              $175.00
+            </div>
+            <div class="package-bonus">30% BONUS</div>
+            <div class="package-info">For serious traders</div>
+            <button class="btn btn-primary">Buy Now</button>
+          </div>
+        </div>
+        
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-icon">
+              <img src="../images/feature-exclusive.svg" alt="Exclusive Access">
+            </div>
+            <div class="feature-content">
+              <h3>Exclusive Access</h3>
+              <p>Get access to special items and deals only available to SkyCoins users.</p>
+            </div>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon">
+              <img src="../images/feature-fast.svg" alt="Fast Transactions">
+            </div>
+            <div class="feature-content">
+              <h3>Instant Transactions</h3>
+              <p>Skip payment processing delays when you shop with SkyCoins.</p>
+            </div>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon">
+              <img src="../images/feature-secure.svg" alt="Secure">
+            </div>
+            <div class="feature-content">
+              <h3>Secure & Safe</h3>
+              <p>Your balance is securely stored and protected in our system.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="payment-methods">
+          <img src="../images/payment-visa.svg" alt="Visa" class="payment-method">
+          <img src="../images/payment-mastercard.svg" alt="Mastercard" class="payment-method">
+          <img src="../images/payment-paypal.svg" alt="PayPal" class="payment-method">
+          <img src="../images/payment-bitcoin.svg" alt="Bitcoin" class="payment-method">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3 class="footer-title">Skyblock RMT</h3>
+        <p>The premier marketplace for Hypixel Skyblock trading.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="marketplace.html">Browse Market</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="role-selection.html">Register</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul class="footer-links">
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Skyblock RMT - All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Check if user is logged in
+      const token = localStorage.getItem('skyblock_rmt_token');
+      const userData = JSON.parse(localStorage.getItem('skyblock_rmt_user')) || {};
+      
+      if (!token) {
+        // User is not logged in, redirect to login page
+        window.location.href = 'login.html?returnTo=buy-coins.html';
+        return;
+      }
+      
+      // Update navigation for logged-in users
+      if (userData) {
+        // Hide login and register links
+        const loginLinks = document.querySelectorAll('a[href*="login.html"]');
+        const registerLinks = document.querySelectorAll('a[href*="role-selection.html"], a[href*="register.html"]');
+        const usernameLinks = document.querySelectorAll('.username-link');
+        
+        loginLinks.forEach(link => {
+          link.style.display = 'none';
+        });
+        
+        registerLinks.forEach(link => {
+          link.style.display = 'none';
+        });
+        
+        usernameLinks.forEach(link => {
+          link.style.display = 'inline-block';
+          
+          // If there's a username display element, populate it
+          const usernameEl = link.querySelector('.username');
+          if (usernameEl) {
+            usernameEl.textContent = userData.username;
+          }
+        });
+        
+        // Set correct profile link based on user role
+        const profileLinks = document.querySelectorAll('.username-link');
+        profileLinks.forEach(link => {
+          if (userData.role && userData.role.toLowerCase() === 'seller') {
+            link.setAttribute('href', 'seller-profile.html');
+          } else {
+            link.setAttribute('href', 'buyer-profile.html');
+          }
+        });
+      }
+      
+      // Load user's coin balance
+      const coinBalance = userData.skycoins || 0;
+      document.getElementById('coin-balance').textContent = coinBalance;
+    });
+    
+    function selectPackage(coins, price) {
+      // In a real implementation, this would open a payment modal/process
+      if (confirm(`Are you sure you want to purchase ${coins} SkyCoins for $${price}?`)) {
+        const userData = JSON.parse(localStorage.getItem('skyblock_rmt_user')) || {};
+        userData.skycoins = (userData.skycoins || 0) + coins;
+        localStorage.setItem('skyblock_rmt_user', JSON.stringify(userData));
+        
+        alert(`Purchase successful! ${coins} SkyCoins have been added to your account.`);
+        document.getElementById('coin-balance').textContent = userData.skycoins;
+      }
+    }
+  </script>
+</body>
+</html> 

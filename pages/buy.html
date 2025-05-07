@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Buy Product - Skyblock RMT Market</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #0a0a0a;
+      color: #ffffff;
+    }
+    
+    .container {
+      max-width: 960px;
+      margin: 80px auto 3rem;
+      padding: 0 1.5rem;
+    }
+    
+    .breadcrumbs {
+      margin-bottom: 1.5rem;
+      color: rgba(255,255,255,0.8);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+    
+    .breadcrumbs a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .breadcrumbs a:hover {
+      color: #00ff9d;
+    }
+    
+    .product-details {
+      background-color: #121212;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    
+    .product-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #ffffff;
+      text-align: center;
+      margin: 0;
+      padding: 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      text-shadow: 0 0 10px rgba(255,255,255,0.1);
+    }
+    
+    .product-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+    
+    .product-image-container {
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #0e0e0e;
+      border-right: 1px solid rgba(255,255,255,0.05);
+    }
+    
+    .product-image {
+      max-width: 100%;
+      max-height: 250px;
+      object-fit: contain;
+    }
+    
+    .product-info {
+      padding: 2rem;
+    }
+    
+    .seller-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 2rem;
+      background-color: rgba(0,0,0,0.2);
+      padding: 0.8rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    
+    .seller-avatar {
+      width: 30px;
+      height: 30px;
+      margin-right: 1rem;
+    }
+    
+    .seller-name {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.95);
+      margin-right: auto;
+    }
+    
+    .seller-rating {
+      color: #ffdd00;
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+    
+    .price-display {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3.2rem;
+      font-weight: 700;
+      color: #00ff9d;
+      text-align: center;
+      margin-bottom: 2rem;
+      text-shadow: 0 0 15px rgba(0,255,157,0.3);
+      letter-spacing: 1px;
+    }
+    
+    .purchase-controls {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .quantity-selector {
+      display: flex;
+      align-items: stretch;
+      background-color: #1a1a1a;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.15);
+      height: 42px;
+    }
+    
+    .quantity-btn {
+      width: 42px;
+      height: 42px;
+      background-color: #1a1a1a;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .quantity-btn:hover {
+      background-color: rgba(0,255,157,0.15);
+    }
+    
+    .quantity-display {
+      width: 40px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: white;
+      font-size: 1.05rem;
+    }
+    
+    .delivery-selector {
+      width: 100%;
+      height: 42px;
+      background-color: #1a1a1a;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 6px;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      padding: 0 1rem;
+      font-size: 0.95rem;
+    }
+    
+    .buy-now-btn {
+      display: block;
+      width: 100%;
+      padding: 0.9rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 2px;
+      background: #00ff9d;
+      border: none;
+      color: #0a0a0a;
+      font-family: 'Orbitron', sans-serif;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    
+    .buy-now-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,255,157,0.4);
+    }
+    
+    .add-cart-btn {
+      display: block;
+      width: 100%;
+      padding: 0.8rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 1px;
+      background: transparent;
+      border: 1.5px solid #00ff9d;
+      color: #00ff9d;
+      font-family: 'Orbitron', sans-serif;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .add-cart-btn:hover {
+      background-color: rgba(0,255,157,0.1);
+    }
+    
+    .product-sections {
+      margin-top: 2rem;
+      padding: 0 2rem 2rem;
+    }
+    
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #ffffff;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 0.8rem;
+    }
+    
+    .section-content {
+      color: rgba(255,255,255,0.85);
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+    
+    @media (max-width: 768px) {
+      .product-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .product-image-container {
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+      }
+    }
+  </style>
+  <script src="../js/main.js" defer></script>
+  <script src="../js/auth.js" defer></script>
+  <script src="../js/profile-router.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <h1><span class="neon-text">Skyblock</span> RMT</h1>
+    </div>
+    <nav>
+      <a href="../index.html" class="nav-link">Home</a>
+      <a href="login.html" class="nav-link">Login</a>
+      <a href="role-selection.html" class="nav-link">Register</a>
+      <a href="marketplace.html" class="nav-link active">Marketplace</a>
+      <a href="action.html" class="nav-link">Action center</a>
+      <a href="seller-profile.html" class="nav-link user-account-link" style="display: none;">My Account: (<span class="username">User</span>)</a>
+    </nav>
+    <div class="mobile-nav-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="breadcrumbs">
+      <a href="marketplace.html">Marketplace</a> &gt; <span id="product-name">Product</span>
+    </div>
+    
+    <div class="product-details">
+      <h1 class="product-title" id="product-title">10M Skyblock Coins</h1>
+      
+      <div class="product-content">
+        <div class="product-image-container">
+          <img src="../images/products/coins.png" alt="Skyblock Coins" id="product-img" class="product-image">
+        </div>
+        
+        <div class="product-info">
+          <div class="seller-info">
+            <img src="../images/seller-icon.svg" alt="Seller" class="seller-avatar">
+            <div class="seller-name">CoinMaster</div>
+            <div class="seller-rating">★★★★★</div>
+          </div>
+          
+          <div class="price-display" id="product-price">$5.99</div>
+          
+          <div class="purchase-controls">
+            <div class="quantity-selector">
+              <button class="quantity-btn" onclick="updateQuantity(-1)">-</button>
+              <div class="quantity-display" id="quantity">1</div>
+              <button class="quantity-btn" onclick="updateQuantity(1)">+</button>
+            </div>
+            
+            <select class="delivery-selector">
+              <option value="standard">Standard Delivery</option>
+              <option value="fast">Fast Delivery (+$1.99)</option>
+              <option value="instant">Instant Delivery (+$4.99)</option>
+            </select>
+          </div>
+          
+          <button class="buy-now-btn">BUY NOW</button>
+          <button class="add-cart-btn">ADD TO CART</button>
+        </div>
+      </div>
+      
+      <div class="product-sections">
+        <div class="section">
+          <h2 class="section-title">Description</h2>
+          <p class="section-content" id="product-desc">
+            Fast delivery of 10 million Skyblock coins. Safe trading method.
+          </p>
+        </div>
+        
+        <div class="section">
+          <h2 class="section-title">Delivery Information</h2>
+          <p class="section-content">
+            After purchase, you will receive instructions on how to meet in-game for the coin transfer. Standard delivery is processed within 1 hour. Fast delivery is guaranteed within 30 minutes, and Instant delivery is completed within 5 minutes after payment confirmation.
+          </p>
+        </div>
+        
+        <div class="section">
+          <h2 class="section-title">Safety Guarantee</h2>
+          <p class="section-content">
+            We use proven trading methods that comply with Hypixel's terms of service to ensure your account safety. All transactions are logged and backed by our money-back guarantee if not fulfilled as described.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3 class="footer-title">Skyblock RMT</h3>
+        <p>The premier marketplace for Hypixel Skyblock trading.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="marketplace.html">Browse Market</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="role-selection.html">Register</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul class="footer-links">
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Skyblock RMT - All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Get product details from URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
+    const productName = urlParams.get('name');
+    const productPrice = urlParams.get('price');
+    const productImage = urlParams.get('img');
+    const productCategory = urlParams.get('category');
+    const productBadge = urlParams.get('badge');
+    const productDesc = urlParams.get('desc');
+    
+    // Update page with product details
+    if (productName) {
+      document.getElementById('product-name').textContent = productName;
+      document.getElementById('product-title').textContent = productName;
+      document.title = `${productName} - Skyblock RMT Market`;
+    }
+    
+    if (productPrice) {
+      document.getElementById('product-price').textContent = productPrice;
+    }
+    
+    if (productImage) {
+      document.getElementById('product-img').src = productImage;
+    }
+    
+    if (productDesc) {
+      document.getElementById('product-desc').textContent = productDesc;
+    }
+    
+    // Quantity selector functionality
+    let quantity = 1;
+    
+    function updateQuantity(change) {
+      quantity = Math.max(1, quantity + change);
+      document.getElementById('quantity').textContent = quantity;
+      
+      // Update price based on quantity
+      if (productPrice) {
+        const basePrice = parseFloat(productPrice.replace('$', ''));
+        document.getElementById('product-price').textContent = `$${(basePrice * quantity).toFixed(2)}`;
+      }
+    }
+    
+    // Buy Now button functionality
+    document.querySelector('.buy-now-btn').addEventListener('click', () => {
+      alert('Proceeding to checkout...');
+      // This would typically redirect to a checkout page
+    });
+    
+    // Add to Cart button functionality
+    document.querySelector('.add-cart-btn').addEventListener('click', () => {
+      alert('Added to cart!');
+      // This would typically add the item to a cart system
+    });
+    
+    // Delivery selector functionality
+    document.querySelector('.delivery-selector').addEventListener('change', (e) => {
+      const deliveryType = e.target.value;
+      
+      if (productPrice) {
+        const basePrice = parseFloat(productPrice.replace('$', ''));
+        let additionalCost = 0;
+        
+        if (deliveryType === 'fast') {
+          additionalCost = 1.99;
+        } else if (deliveryType === 'instant') {
+          additionalCost = 4.99;
+        }
+        
+        document.getElementById('product-price').textContent = `$${((basePrice * quantity) + additionalCost).toFixed(2)}`;
+      }
+    });
+    
+    // Quick test login button (for demonstration only)
+    const testLoginButton = document.createElement('button');
+    testLoginButton.textContent = 'Test Login/Logout';
+    testLoginButton.style.position = 'fixed';
+    testLoginButton.style.bottom = '20px';
+    testLoginButton.style.right = '20px';
+    testLoginButton.style.padding = '8px 12px';
+    testLoginButton.style.background = '#333';
+    testLoginButton.style.color = 'white';
+    testLoginButton.style.border = 'none';
+    testLoginButton.style.borderRadius = '4px';
+    testLoginButton.style.cursor = 'pointer';
+    testLoginButton.style.zIndex = '1000';
+    
+    testLoginButton.addEventListener('click', () => {
+      if (localStorage.getItem('skyblock_rmt_token')) {
+        // User is logged in, so log them out
+        logout();
+        testLoginButton.textContent = 'Test Login';
+      } else {
+        // User is not logged in, so log them in
+        const demoUser = {
+          id: '123456',
+          username: 'TestUser',
+          role: 'buyer',
+          email: 'testuser@example.com'
+        };
+        
+        // Store auth info
+        const token = 'simulated_jwt_token_' + Date.now();
+        localStorage.setItem('skyblock_rmt_token', token);
+        localStorage.setItem('skyblock_rmt_user', JSON.stringify(demoUser));
+        
+        // Update auth state
+        const authState = {
+          isLoggedIn: true,
+          user: demoUser,
+          userRole: demoUser.role
+        };
+        
+        // Update UI
+        const loginLinks = document.querySelectorAll('a[href*="login.html"]');
+        const registerLinks = document.querySelectorAll('a[href*="role-selection.html"], a[href*="register.html"]');
+        const accountElements = document.querySelectorAll('.user-account');
+        
+        loginLinks.forEach(link => link.style.display = 'none');
+        registerLinks.forEach(link => link.style.display = 'none');
+        
+        accountElements.forEach(el => {
+          el.style.display = 'block';
+          const usernameEl = el.querySelector('.username');
+          if (usernameEl) {
+            usernameEl.textContent = demoUser.username;
+          }
+        });
+        
+        testLoginButton.textContent = 'Test Logout';
+      }
+    });
+    
+    document.body.appendChild(testLoginButton);
+  </script>
+</body>
+</html> 

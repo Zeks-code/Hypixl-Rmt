@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - Skyblock RMT Market</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/auth.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .login-error {
+      background-color: rgba(255, 0, 0, 0.1);
+      border-left: 4px solid #ff0000;
+      color: #ff0000;
+      padding: 10px 15px;
+      margin: 10px 0;
+      display: none;
+      border-radius: 4px;
+    }
+    
+    .auth-card {
+      background-color: rgba(30, 30, 30, 0.9);
+      box-shadow: 0 0 30px rgba(255, 0, 0, 0.15);
+      border: 1px solid rgba(255, 0, 0, 0.1);
+    }
+    
+    .btn-primary {
+      background: linear-gradient(90deg, #ff0000, #990000);
+    }
+    
+    .btn-primary:hover {
+      background: linear-gradient(90deg, #ff2222, #bb0000);
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+    }
+    
+    /* Role selection dropdown styling */
+    #role-select {
+      width: 100%;
+      background-color: rgba(15, 15, 15, 0.6);
+      border: 1px solid rgba(255, 0, 0, 0.1);
+      border-radius: 5px;
+      color: #ffffff;
+      padding: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      appearance: none;
+      background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+    }
+    
+    #role-select:focus {
+      outline: none;
+      border-color: rgba(255, 0, 0, 0.5);
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+    }
+  </style>
+  <script src="../js/main.js" defer></script>
+  <script src="../js/auth.js" defer></script>
+  <script src="../js/profile-router.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <h1><span class="neon-text">Skyblock</span> RMT</h1>
+    </div>
+    <nav>
+      <a href="../index.html" class="nav-link">Home</a>
+      <a href="login.html" class="nav-link active">Login</a>
+      <a href="role-selection.html" class="nav-link">Register</a>
+      <a href="marketplace.html" class="nav-link">Marketplace</a>
+      <div class="user-account" style="display: none;">
+        <a href="profile.html" class="nav-link">My Account (<span class="username">User</span>)</a>
+        <a href="#" class="nav-link logout-button">Logout</a>
+      </div>
+    </nav>
+    <div class="mobile-nav-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </header>
+
+  <div class="auth-container">
+    <div class="auth-decorations">
+      <div class="glow-circle"></div>
+      <div class="glow-line"></div>
+    </div>
+    
+    <div class="auth-card">
+      <div class="auth-header">
+        <h2>Login to <span class="neon-text">Skyblock</span> RMT</h2>
+        <p>Access your account to start trading!</p>
+      </div>
+      
+      <div class="login-error">
+        Invalid username or password. Please try again.
+      </div>
+      
+      <form class="auth-form" id="login-form">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" placeholder="Enter your username" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter your password" required>
+          <span class="password-toggle" id="password-toggle">Show</span>
+        </div>
+        
+        <div class="form-group">
+          <label for="role-select">Account Type</label>
+          <select id="role-select" name="role" class="form-control">
+            <option value="buyer">Buyer</option>
+            <option value="seller">Seller</option>
+          </select>
+        </div>
+        
+        <div class="remember-me">
+          <input type="checkbox" id="remember-me" name="remember-me">
+          <label for="remember-me">Remember me</label>
+        </div>
+        
+        <a href="forgot-password.html" class="forgot-password">Forgot Password?</a>
+        
+        <button type="submit" class="btn btn-primary">LOGIN</button>
+      </form>
+      
+      <div class="auth-divider">
+        <span>OR</span>
+      </div>
+      
+      <button class="btn btn-discord">
+        <span class="icon-discord"></span>
+        LOGIN WITH DISCORD
+      </button>
+      
+      <div class="auth-footer">
+        <p>Don't have an account? <a href="role-selection.html" class="accent-text">Register Now</a></p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3 class="footer-title">Skyblock RMT</h3>
+        <p>The premier marketplace for Hypixel Skyblock trading.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="marketplace.html">Browse Market</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="role-selection.html">Register</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul class="footer-links">
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Skyblock RMT - All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Password toggle
+      const passwordToggle = document.getElementById('password-toggle');
+      const passwordField = document.getElementById('password');
+      
+      passwordToggle.addEventListener('click', function() {
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+        passwordToggle.textContent = type === 'password' ? 'Show' : 'Hide';
+      });
+      
+      // Login form handling
+      const loginForm = document.getElementById('login-form');
+      if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          const username = document.getElementById('username').value;
+          const password = document.getElementById('password').value;
+          const roleSelect = document.getElementById('role-select');
+          const role = roleSelect ? roleSelect.value : 'buyer';
+          
+          // Simulate login (in a real app this would be an API call)
+          const user = {
+            id: '123456',
+            username: username,
+            role: role,
+            email: `${username}@example.com`
+          };
+          
+          // Store auth info
+          const token = 'simulated_jwt_token_' + Date.now();
+          localStorage.setItem('skyblock_rmt_token', token);
+          localStorage.setItem('skyblock_rmt_user', JSON.stringify(user));
+          
+          // Get redirect URL from query params if available
+          const urlParams = new URLSearchParams(window.location.search);
+          const returnTo = urlParams.get('returnTo');
+          
+          // Redirect based on user role
+          if (returnTo) {
+            window.location.href = returnTo;
+          } else {
+            if (role.toLowerCase() === 'seller') {
+              window.location.href = 'seller-profile.html';
+            } else {
+              window.location.href = 'buyer-profile.html';
+            }
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html> 

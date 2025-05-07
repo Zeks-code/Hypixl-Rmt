@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+  <!-- Emerald Block -->
+  <defs>
+    <filter id="emeraldGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur" />
+      <feFlood flood-color="#50C878" flood-opacity="0.7" />
+      <feComposite in2="blur" operator="in" />
+      <feComposite in="SourceGraphic" />
+    </filter>
+    <linearGradient id="emeraldFront" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2E8B57" />
+      <stop offset="100%" style="stop-color:#2E8B57" />
+    </linearGradient>
+    <linearGradient id="emeraldTop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#50C878" />
+      <stop offset="100%" style="stop-color:#3CB371" />
+    </linearGradient>
+    <linearGradient id="emeraldSide" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3CB371" />
+      <stop offset="100%" style="stop-color:#228B22" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Isometric Cube -->
+  <g transform="translate(50, 50)" filter="url(#emeraldGlow)">
+    <!-- Top face -->
+    <polygon points="0,-25 25,0 0,25 -25,0" 
+             fill="url(#emeraldTop)" stroke="#006400" stroke-width="1.5" />
+    
+    <!-- Left face -->
+    <polygon points="-25,0 0,25 0,50 -25,25" 
+             fill="url(#emeraldSide)" stroke="#006400" stroke-width="1.5" />
+    
+    <!-- Right face -->
+    <polygon points="25,0 0,25 0,50 25,25" 
+             fill="url(#emeraldFront)" stroke="#006400" stroke-width="1.5" />
+  </g>
+  
+  <!-- Emerald Features -->
+  <path d="M45,25 L55,35 M40,35 L50,45 M60,40 L45,55" 
+        stroke="#AAFFE5" stroke-width="1" opacity="0.7" />
+  <path d="M30,45 L40,35 M60,25 L45,40" 
+        stroke="#AAFFE5" stroke-width="1" opacity="0.7" />
+  
+  <!-- Sparkle -->
+  <polygon points="50,20 52,22 54,20 52,18" 
+           fill="white" opacity="0.8" />
+  <circle cx="30" cy="30" r="1" fill="white" opacity="0.8" />
+  <circle cx="70" cy="35" r="1" fill="white" opacity="0.8" />
+</svg> 
